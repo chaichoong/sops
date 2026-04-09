@@ -1,0 +1,10 @@
+{
+  "id": "skill-creator-from-manus",
+  "title": "Skill Creator",
+  "desc": "Guide for creating or updating Claude Cowork skills using a 6-step process: understand, plan, initialise, edit, validate, and iterate.",
+  "category": "system",
+  "icon": "&#x1F6E0;&#xFE0F;",
+  "version": "1.0",
+  "updated": "2025-04-09",
+  "file": "sops/skill-creator-from-manus.html"
+}
