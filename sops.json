@@ -10,6 +10,16 @@
     "file": "sops/transaction-reconciler.html"
   },
   {
+    "id": "daily-schedule",
+    "title": "Daily Schedule",
+    "desc": "Build a practical, realistic daily schedule from a list of tasks and constraints, then add each block to Google Calendar after confirmation.",
+    "category": "ops",
+    "icon": "&#x1F4C5;",
+    "version": "1.0",
+    "updated": "2025-04-09",
+    "file": "sops/daily-schedule.html"
+  },
+  {
     "id": "sop-generator",
     "title": "SOP Generator",
     "desc": "Generates a complete SOP HTML file for any of Kevin's skills by reading its SKILL.md and filling every placeholder in the standard SOP template.",
