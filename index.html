@@ -7,128 +7,99 @@
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  line-height: 1.6;
-  color: #1e293b;
-  background: #f1f5f9;
-}
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #1e293b; background: #f1f5f9; }
 :root {
-  --blue-50: #eff6ff; --blue-100: #dbeafe; --blue-200: #bfdbfe;
-  --blue-500: #3b82f6; --blue-600: #2563eb; --blue-700: #1d4ed8; --blue-800: #1e40af; --blue-900: #1e3a5f;
-  --indigo-50: #eef2ff; --indigo-100: #e0e7ff; --indigo-500: #6366f1; --indigo-600: #4f46e5; --indigo-700: #4338ca;
-  --green-50: #f0fdf4; --green-100: #dcfce7; --green-500: #22c55e; --green-600: #16a34a; --green-700: #15803d;
-  --amber-50: #fffbeb; --amber-100: #fef3c7; --amber-500: #f59e0b; --amber-600: #d97706;
-  --purple-50: #faf5ff; --purple-500: #a855f7; --purple-600: #9333ea;
-  --slate-50: #f8fafc; --slate-100: #f1f5f9; --slate-200: #e2e8f0; --slate-300: #cbd5e1;
-  --slate-400: #94a3b8; --slate-500: #64748b; --slate-600: #475569; --slate-700: #334155; --slate-800: #1e293b;
-  --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
-  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
-  --radius: 12px; --radius-sm: 8px;
+  --blue-50:#eff6ff;--blue-100:#dbeafe;--blue-200:#bfdbfe;--blue-500:#3b82f6;--blue-600:#2563eb;--blue-700:#1d4ed8;--blue-800:#1e40af;
+  --indigo-700:#4338ca;--green-50:#f0fdf4;--green-200:#bbf7d0;--green-600:#16a34a;--green-700:#15803d;
+  --amber-50:#fffbeb;--amber-200:#fde68a;--red-50:#fef2f2;--red-200:#fecaca;--red-700:#b91c1c;
+  --slate-50:#f8fafc;--slate-100:#f1f5f9;--slate-200:#e2e8f0;--slate-400:#94a3b8;--slate-500:#64748b;--slate-600:#475569;--slate-700:#334155;--slate-800:#1e293b;
+  --shadow:0 1px 3px rgba(0,0,0,0.1),0 1px 2px rgba(0,0,0,0.06);
+  --shadow-md:0 4px 6px -1px rgba(0,0,0,0.1),0 2px 4px -1px rgba(0,0,0,0.06);
+  --shadow-lg:0 10px 15px -3px rgba(0,0,0,0.1),0 4px 6px -2px rgba(0,0,0,0.05);
+  --radius:12px;--radius-sm:8px;
 }
-
-.header {
-  background: linear-gradient(135deg, var(--blue-800) 0%, var(--indigo-700) 100%);
-  color: white; padding: 2.5rem 2rem 2rem; position: relative; overflow: hidden;
-}
-.header::after {
-  content: ''; position: absolute; top: -50%; right: -10%; width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
-  border-radius: 50%;
-}
-.header-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
-.header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.25rem; letter-spacing: -0.5px; }
-.header .subtitle { font-size: 1rem; opacity: 0.85; }
-.header .version { font-size: 0.82rem; opacity: 0.55; margin-top: 0.4rem; }
-.header-stats { display: flex; gap: 1.25rem; flex-wrap: wrap; }
-.header-stat { text-align: center; background: rgba(255,255,255,0.12); border-radius: var(--radius-sm); padding: 0.6rem 1.1rem; }
-.header-stat .hs-num { font-size: 1.6rem; font-weight: 700; line-height: 1.1; }
-.header-stat .hs-label { font-size: 0.72rem; opacity: 0.75; text-transform: uppercase; letter-spacing: 0.5px; }
-
-.container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
-
-.toolbar {
-  display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center;
-  background: white; border-radius: var(--radius); box-shadow: var(--shadow);
-  padding: 1rem 1.25rem; margin-bottom: 1.5rem; border: 1px solid var(--slate-200);
-}
-.search-wrap { flex: 1; min-width: 200px; position: relative; }
-.search-wrap input {
-  width: 100%; padding: 0.6rem 0.85rem 0.6rem 2.5rem;
-  border: 1px solid var(--slate-200); border-radius: var(--radius-sm);
-  font-size: 0.9rem; background: var(--slate-50); color: var(--slate-800);
-  outline: none; transition: border-color 0.15s;
-}
-.search-wrap input:focus { border-color: var(--blue-400); background: white; }
-.search-wrap .search-icon { position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); font-size: 0.95rem; opacity: 0.45; }
-.filter-btns { display: flex; gap: 0.4rem; flex-wrap: wrap; }
-.filter-btn {
-  padding: 0.45rem 0.85rem; border-radius: 999px; font-size: 0.78rem; font-weight: 600;
-  border: 1.5px solid var(--slate-200); background: white; color: var(--slate-600);
-  cursor: pointer; transition: all 0.15s; white-space: nowrap;
-}
-.filter-btn:hover { border-color: var(--blue-300); color: var(--blue-700); }
-.filter-btn.active { background: var(--blue-600); border-color: var(--blue-600); color: white; }
-
-.section-heading {
-  font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
-  color: var(--slate-400); margin-bottom: 0.75rem; margin-top: 0.25rem;
-  display: flex; align-items: center; gap: 0.5rem;
-}
-.section-heading span { flex: 1; height: 1px; background: var(--slate-200); }
-
-.sop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }
-
-.sop-card {
-  background: white; border-radius: var(--radius); box-shadow: var(--shadow);
-  border: 1px solid var(--slate-200); overflow: hidden;
-  transition: box-shadow 0.15s, transform 0.15s; text-decoration: none; color: inherit; display: block;
-}
-.sop-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
-.sop-card-top { padding: 1.1rem 1.25rem 0.85rem; border-bottom: 1px solid var(--slate-100); }
-.sop-card-icon {
-  width: 42px; height: 42px; border-radius: var(--radius-sm); display: flex;
-  align-items: center; justify-content: center; font-size: 1.3rem; margin-bottom: 0.75rem;
-}
-.sop-card h3 { font-size: 1rem; font-weight: 700; color: var(--slate-800); margin-bottom: 0.2rem; }
-.sop-card .sop-desc { font-size: 0.82rem; color: var(--slate-500); line-height: 1.45; }
-.sop-card-bottom {
-  padding: 0.7rem 1.25rem; display: flex; align-items: center; justify-content: space-between;
-  background: var(--slate-50);
-}
-.sop-meta { font-size: 0.75rem; color: var(--slate-400); }
-.sop-tag {
-  font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.55rem; border-radius: 999px;
-}
-
-/* category colours */
-.cat-finance { background: #dbeafe; color: #1d4ed8; }
-.cat-property { background: #dcfce7; color: #166534; }
-.cat-tenant { background: #fef3c7; color: #92400e; }
-.cat-comms { background: #e0e7ff; color: #3730a3; }
-.cat-ops { background: #f3e8ff; color: #6b21a8; }
-.cat-content { background: #fee2e2; color: #991b1b; }
-.cat-system { background: #d1fae5; color: #065f46; }
-
-.icon-finance { background: #dbeafe; }
-.icon-property { background: #dcfce7; }
-.icon-tenant { background: #fef3c7; }
-.icon-comms { background: #e0e7ff; }
-.icon-ops { background: #f3e8ff; }
-.icon-content { background: #fed7aa; }
-.icon-system { background: #d1fae5; }
-
-.empty-state { text-align: center; padding: 3rem; color: var(--slate-400); }
-.empty-state .es-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
-.empty-state p { font-size: 0.9rem; }
-
-.sop-count { font-size: 0.8rem; color: var(--slate-400); margin-left: auto; }
-
-@media (max-width: 768px) {
-  .header h1 { font-size: 1.5rem; }
-  .header-stats { gap: 0.75rem; }
-  .sop-grid { grid-template-columns: 1fr; }
-  .container { padding: 1.25rem 1rem 3rem; }
+.header { background: linear-gradient(135deg,#1e40af 0%,#4338ca 100%); color:white; padding:2.5rem 2rem 2rem; position:relative; overflow:hidden; }
+.header::after { content:''; position:absolute; top:-50%; right:-10%; width:500px; height:500px; background:radial-gradient(circle,rgba(255,255,255,0.08) 0%,transparent 70%); border-radius:50%; }
+.header-inner { max-width:1100px; margin:0 auto; position:relative; z-index:1; display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:1rem; }
+.header h1 { font-size:2rem; font-weight:700; margin-bottom:0.25rem; letter-spacing:-0.5px; }
+.header .subtitle { font-size:1rem; opacity:0.85; }
+.header .version { font-size:0.82rem; opacity:0.55; margin-top:0.4rem; }
+.header-right { display:flex; align-items:flex-end; gap:1.25rem; flex-wrap:wrap; }
+.header-stats { display:flex; gap:1.25rem; flex-wrap:wrap; }
+.header-stat { text-align:center; background:rgba(255,255,255,0.12); border-radius:var(--radius-sm); padding:0.6rem 1.1rem; }
+.header-stat .hs-num { font-size:1.6rem; font-weight:700; line-height:1.1; }
+.header-stat .hs-label { font-size:0.72rem; opacity:0.75; text-transform:uppercase; letter-spacing:0.5px; }
+.btn-upload-header { background:rgba(255,255,255,0.15); border:1.5px solid rgba(255,255,255,0.3); color:white; padding:0.6rem 1.2rem; border-radius:var(--radius-sm); font-size:0.85rem; font-weight:600; cursor:pointer; transition:all 0.15s; white-space:nowrap; }
+.btn-upload-header:hover { background:rgba(255,255,255,0.25); }
+.token-indicator { display:inline-flex; align-items:center; gap:0.4rem; font-size:0.75rem; padding:0.3rem 0.7rem; border-radius:999px; cursor:pointer; border:none; }
+.token-indicator.connected { background:rgba(255,255,255,0.15); color:white; }
+.token-indicator.disconnected { background:rgba(239,68,68,0.25); color:#fca5a5; }
+.container { max-width:1100px; margin:0 auto; padding:2rem 1.5rem 4rem; }
+.setup-banner { background:#fffbeb; border:1px solid #fde68a; border-radius:var(--radius); padding:1.25rem 1.5rem; margin-bottom:1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
+.setup-banner p { font-size:0.88rem; color:#92400e; }
+.toolbar { display:flex; gap:0.75rem; flex-wrap:wrap; align-items:center; background:white; border-radius:var(--radius); box-shadow:var(--shadow); padding:1rem 1.25rem; margin-bottom:1.5rem; border:1px solid var(--slate-200); }
+.search-wrap { flex:1; min-width:200px; position:relative; }
+.search-wrap input { width:100%; padding:0.6rem 0.85rem 0.6rem 2.5rem; border:1px solid var(--slate-200); border-radius:var(--radius-sm); font-size:0.9rem; background:var(--slate-50); color:var(--slate-800); outline:none; transition:border-color 0.15s; }
+.search-wrap input:focus { border-color:#93c5fd; background:white; }
+.search-wrap .si { position:absolute; left:0.75rem; top:50%; transform:translateY(-50%); font-size:0.95rem; opacity:0.45; }
+.filter-btns { display:flex; gap:0.4rem; flex-wrap:wrap; }
+.filter-btn { padding:0.45rem 0.85rem; border-radius:999px; font-size:0.78rem; font-weight:600; border:1.5px solid var(--slate-200); background:white; color:var(--slate-600); cursor:pointer; transition:all 0.15s; white-space:nowrap; }
+.filter-btn:hover { border-color:#93c5fd; color:#1d4ed8; }
+.filter-btn.active { background:#2563eb; border-color:#2563eb; color:white; }
+.sop-count { font-size:0.8rem; color:var(--slate-400); margin-left:auto; }
+.section-heading { font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--slate-400); margin-bottom:0.75rem; margin-top:0.25rem; display:flex; align-items:center; gap:0.5rem; }
+.section-heading span { flex:1; height:1px; background:var(--slate-200); }
+.sop-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1rem; }
+.sop-card { background:white; border-radius:var(--radius); box-shadow:var(--shadow); border:1px solid var(--slate-200); overflow:hidden; transition:box-shadow 0.15s,transform 0.15s; text-decoration:none; color:inherit; display:block; }
+.sop-card:hover { box-shadow:var(--shadow-md); transform:translateY(-2px); }
+.sop-card-top { padding:1.1rem 1.25rem 0.85rem; border-bottom:1px solid var(--slate-100); }
+.sop-card-icon { width:42px; height:42px; border-radius:var(--radius-sm); display:flex; align-items:center; justify-content:center; font-size:1.3rem; margin-bottom:0.75rem; }
+.sop-card h3 { font-size:1rem; font-weight:700; color:var(--slate-800); margin-bottom:0.2rem; }
+.sop-card .sop-desc { font-size:0.82rem; color:var(--slate-500); line-height:1.45; }
+.sop-card-bottom { padding:0.7rem 1.25rem; display:flex; align-items:center; justify-content:space-between; background:var(--slate-50); }
+.sop-meta { font-size:0.75rem; color:var(--slate-400); }
+.sop-tag { font-size:0.7rem; font-weight:600; padding:0.2rem 0.55rem; border-radius:999px; }
+.cat-finance{background:#dbeafe;color:#1d4ed8;} .cat-property{background:#dcfce7;color:#166534;} .cat-tenant{background:#fef3c7;color:#92400e;} .cat-comms{background:#e0e7ff;color:#3730a3;} .cat-ops{background:#f3e8ff;color:#6b21a8;} .cat-content{background:#fee2e2;color:#991b1b;} .cat-system{background:#d1fae5;color:#065f46;}
+.icon-finance{background:#dbeafe;} .icon-property{background:#dcfce7;} .icon-tenant{background:#fef3c7;} .icon-comms{background:#e0e7ff;} .icon-ops{background:#f3e8ff;} .icon-content{background:#fed7aa;} .icon-system{background:#d1fae5;}
+.empty-state { text-align:center; padding:3rem; color:var(--slate-400); }
+.empty-state .es-icon { font-size:2.5rem; margin-bottom:0.75rem; }
+.empty-state p { font-size:0.9rem; }
+.modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center; padding:1rem; }
+.modal-overlay.open { display:flex; }
+.modal { background:white; border-radius:var(--radius); box-shadow:var(--shadow-lg); width:100%; max-width:560px; overflow:hidden; }
+.modal-header { padding:1.25rem 1.5rem; border-bottom:1px solid var(--slate-200); display:flex; align-items:center; justify-content:space-between; }
+.modal-header h2 { font-size:1.1rem; font-weight:700; color:var(--slate-800); }
+.modal-close { background:none; border:none; font-size:1.3rem; cursor:pointer; color:var(--slate-400); padding:0.2rem 0.4rem; border-radius:4px; line-height:1; }
+.modal-close:hover { background:var(--slate-100); }
+.modal-body { padding:1.5rem; }
+.modal-footer { padding:1rem 1.5rem; border-top:1px solid var(--slate-200); display:flex; gap:0.75rem; justify-content:flex-end; }
+.form-group { margin-bottom:1.1rem; }
+.form-group label { display:block; font-size:0.78rem; font-weight:600; color:var(--slate-600); margin-bottom:0.4rem; text-transform:uppercase; letter-spacing:0.4px; }
+.form-group input { width:100%; padding:0.6rem 0.85rem; border:1px solid var(--slate-200); border-radius:var(--radius-sm); font-size:0.9rem; color:var(--slate-800); outline:none; transition:border-color 0.15s; background:var(--slate-50); }
+.form-group input:focus { border-color:#93c5fd; background:white; }
+.form-group .hint { font-size:0.78rem; color:var(--slate-400); margin-top:0.3rem; }
+.form-group .hint a { color:#2563eb; }
+.drop-zones { display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; }
+.drop-zone { border:2px dashed var(--slate-200); border-radius:var(--radius-sm); padding:1.25rem; text-align:center; cursor:pointer; transition:all 0.15s; background:var(--slate-50); }
+.drop-zone:hover,.drop-zone.dragover { border-color:#93c5fd; background:#eff6ff; }
+.drop-zone.has-file { border-color:#16a34a; background:#f0fdf4; }
+.drop-zone input[type="file"] { display:none; }
+.dz-icon { font-size:1.5rem; margin-bottom:0.4rem; }
+.dz-label { font-size:0.85rem; font-weight:600; color:var(--slate-600); }
+.dz-sub { font-size:0.75rem; color:var(--slate-400); margin-top:0.2rem; }
+.dz-filename { font-size:0.8rem; font-weight:600; color:#15803d; margin-top:0.35rem; word-break:break-all; }
+.btn { padding:0.6rem 1.25rem; border-radius:var(--radius-sm); font-size:0.88rem; font-weight:600; cursor:pointer; transition:all 0.15s; border:none; }
+.btn-primary { background:#2563eb; color:white; }
+.btn-primary:hover { background:#1d4ed8; }
+.btn-primary:disabled { background:var(--slate-300); cursor:not-allowed; }
+.btn-secondary { background:white; color:var(--slate-600); border:1px solid var(--slate-200); }
+.btn-secondary:hover { background:var(--slate-50); }
+.status-msg { padding:0.75rem 1rem; border-radius:var(--radius-sm); font-size:0.85rem; margin-top:1rem; display:none; }
+.status-msg.success { background:#f0fdf4; color:#15803d; border:1px solid #bbf7d0; display:block; }
+.status-msg.error { background:#fef2f2; color:#b91c1c; border:1px solid #fecaca; display:block; }
+.status-msg.loading { background:#eff6ff; color:#1d4ed8; border:1px solid #bfdbfe; display:block; }
+@media(max-width:768px){
+  .header h1{font-size:1.5rem;} .sop-grid{grid-template-columns:1fr;} .container{padding:1.25rem 1rem 3rem;} .drop-zones{grid-template-columns:1fr;}
 }
 </style>
 </head>
@@ -141,14 +112,14 @@ body {
       <div class="subtitle">Standard Operating Procedures for all Claude skills</div>
       <div class="version">Owner: Kevin Brittain &bull; Auto-generated via Claude &bull; <span id="last-updated"></span></div>
     </div>
-    <div class="header-stats">
-      <div class="header-stat">
-        <div class="hs-num" id="total-count">0</div>
-        <div class="hs-label">Total SOPs</div>
+    <div class="header-right">
+      <div class="header-stats">
+        <div class="header-stat"><div class="hs-num" id="total-count">0</div><div class="hs-label">Total SOPs</div></div>
+        <div class="header-stat"><div class="hs-num" id="cat-count">0</div><div class="hs-label">Categories</div></div>
       </div>
-      <div class="header-stat">
-        <div class="hs-num" id="cat-count">0</div>
-        <div class="hs-label">Categories</div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.5rem;">
+        <button class="btn-upload-header" onclick="openUploadModal()">&#x2B06; Add SOP</button>
+        <button class="token-indicator disconnected" id="token-indicator" onclick="openTokenModal()">&#x1F511; No token set</button>
       </div>
     </div>
   </div>
@@ -156,253 +127,243 @@ body {
 
 <div class="container">
 
+  <div class="setup-banner" id="setup-banner" style="display:none;">
+    <p><strong>GitHub token not set.</strong> Set your token once to enable uploading SOPs directly from this page.</p>
+    <button class="btn btn-secondary" onclick="openTokenModal()">Set Token</button>
+  </div>
+
   <div class="toolbar">
     <div class="search-wrap">
-      <span class="search-icon">&#x1F50D;</span>
+      <span class="si">&#x1F50D;</span>
       <input type="text" id="search" placeholder="Search SOPs&hellip;" oninput="filterSOPs()">
     </div>
-    <div class="filter-btns" id="filter-btns">
-      <button class="filter-btn active" onclick="setFilter('all', this)">All</button>
-      <button class="filter-btn" onclick="setFilter('finance', this)">Finance</button>
-      <button class="filter-btn" onclick="setFilter('property', this)">Property</button>
-      <button class="filter-btn" onclick="setFilter('tenant', this)">Tenant</button>
-      <button class="filter-btn" onclick="setFilter('comms', this)">Comms</button>
-      <button class="filter-btn" onclick="setFilter('ops', this)">Ops</button>
-      <button class="filter-btn" onclick="setFilter('content', this)">Content</button>
-      <button class="filter-btn" onclick="setFilter('system', this)">System</button>
+    <div class="filter-btns">
+      <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
+      <button class="filter-btn" onclick="setFilter('finance',this)">Finance</button>
+      <button class="filter-btn" onclick="setFilter('property',this)">Property</button>
+      <button class="filter-btn" onclick="setFilter('tenant',this)">Tenant</button>
+      <button class="filter-btn" onclick="setFilter('comms',this)">Comms</button>
+      <button class="filter-btn" onclick="setFilter('ops',this)">Ops</button>
+      <button class="filter-btn" onclick="setFilter('content',this)">Content</button>
+      <button class="filter-btn" onclick="setFilter('system',this)">System</button>
     </div>
     <span class="sop-count" id="sop-count"></span>
   </div>
 
   <div id="sop-list"></div>
+</div>
 
+<!-- UPLOAD MODAL -->
+<div class="modal-overlay" id="upload-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>&#x2B06; Add New SOP</h2>
+      <button class="modal-close" onclick="closeModal('upload-modal')">&#x2715;</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:0.85rem;color:var(--slate-500);margin-bottom:1.25rem;">Select the HTML and JSON files generated by Claude. Both will be uploaded to the <code style="background:var(--slate-100);padding:0.1rem 0.35rem;border-radius:3px;font-size:0.8rem;">sops/</code> folder and the dashboard will update automatically within 60 seconds.</p>
+      <div class="drop-zones">
+        <div class="drop-zone" id="dz-html" onclick="document.getElementById('file-html').click()" ondragover="dzOver(event,'dz-html')" ondragleave="dzLeave('dz-html')" ondrop="dzDrop(event,'html')">
+          <input type="file" id="file-html" accept=".html" onchange="filePicked('html',this)">
+          <div class="dz-icon">&#x1F4C4;</div>
+          <div class="dz-label">HTML file</div>
+          <div class="dz-sub">Click or drag &amp; drop</div>
+          <div class="dz-filename" id="fn-html"></div>
+        </div>
+        <div class="drop-zone" id="dz-json" onclick="document.getElementById('file-json').click()" ondragover="dzOver(event,'dz-json')" ondragleave="dzLeave('dz-json')" ondrop="dzDrop(event,'json')">
+          <input type="file" id="file-json" accept=".json" onchange="filePicked('json',this)">
+          <div class="dz-icon">&#x1F4CB;</div>
+          <div class="dz-label">JSON file</div>
+          <div class="dz-sub">Click or drag &amp; drop</div>
+          <div class="dz-filename" id="fn-json"></div>
+        </div>
+      </div>
+      <div class="status-msg" id="upload-status"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('upload-modal')">Cancel</button>
+      <button class="btn btn-primary" id="btn-upload" onclick="doUpload()" disabled>Upload to GitHub</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOKEN MODAL -->
+<div class="modal-overlay" id="token-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>&#x1F511; GitHub Token</h2>
+      <button class="modal-close" onclick="closeModal('token-modal')">&#x2715;</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:0.85rem;color:var(--slate-500);margin-bottom:1.25rem;">Your token is stored permanently in this browser only. It is sent directly to the GitHub API and nowhere else.</p>
+      <div class="form-group">
+        <label>Personal Access Token</label>
+        <input type="password" id="token-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+        <div class="hint">Needs <strong>repo</strong> scope. <a href="https://github.com/settings/tokens" target="_blank">Create one at github.com/settings/tokens &rarr;</a></div>
+      </div>
+      <div class="status-msg" id="token-status"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="clearToken()" style="margin-right:auto;">Clear Token</button>
+      <button class="btn btn-secondary" onclick="closeModal('token-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveToken()">Save Token</button>
+    </div>
+  </div>
 </div>
 
 <script>
+const REPO = 'chaichoong/sops';
+const BRANCH = 'main';
 let SOPS = [];
+let picked = { html: null, json: null };
+let currentFilter = 'all';
 
+/* TOKEN */
+const getToken = () => localStorage.getItem('gh_sops_token');
+
+function saveToken() {
+  const t = document.getElementById('token-input').value.trim();
+  if (!t) { setStatus('token-status','error','Please enter a token.'); return; }
+  localStorage.setItem('gh_sops_token', t);
+  setStatus('token-status','success','Token saved successfully.');
+  updateTokenUI();
+  setTimeout(() => closeModal('token-modal'), 1200);
+}
+
+function clearToken() {
+  localStorage.removeItem('gh_sops_token');
+  document.getElementById('token-input').value = '';
+  updateTokenUI();
+  setStatus('token-status','error','Token cleared.');
+}
+
+function updateTokenUI() {
+  const ind = document.getElementById('token-indicator');
+  const banner = document.getElementById('setup-banner');
+  if (getToken()) {
+    ind.className = 'token-indicator connected';
+    ind.textContent = '\u{1F511} Token set';
+    banner.style.display = 'none';
+  } else {
+    ind.className = 'token-indicator disconnected';
+    ind.textContent = '\u{1F511} No token set';
+    banner.style.display = 'flex';
+  }
+}
+
+function openTokenModal() {
+  const t = getToken();
+  if (t) document.getElementById('token-input').value = t;
+  document.getElementById('token-status').className = 'status-msg';
+  document.getElementById('token-modal').classList.add('open');
+}
+
+/* UPLOAD MODAL */
+function openUploadModal() {
+  if (!getToken()) { openTokenModal(); return; }
+  picked = { html: null, json: null };
+  ['html','json'].forEach(t => {
+    document.getElementById('dz-'+t).classList.remove('has-file');
+    document.getElementById('fn-'+t).textContent = '';
+    document.getElementById('file-'+t).value = '';
+  });
+  document.getElementById('upload-status').className = 'status-msg';
+  document.getElementById('btn-upload').disabled = true;
+  document.getElementById('btn-upload').textContent = 'Upload to GitHub';
+  document.getElementById('upload-modal').classList.add('open');
+}
+
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+function dzOver(e, id) { e.preventDefault(); document.getElementById(id).classList.add('dragover'); }
+function dzLeave(id) { document.getElementById(id).classList.remove('dragover'); }
+function dzDrop(e, type) {
+  e.preventDefault();
+  document.getElementById('dz-'+type).classList.remove('dragover');
+  const f = e.dataTransfer.files[0];
+  if (f) applyFile(type, f);
+}
+function filePicked(type, input) { if (input.files[0]) applyFile(type, input.files[0]); }
+
+function applyFile(type, file) {
+  picked[type] = file;
+  document.getElementById('dz-'+type).classList.add('has-file');
+  document.getElementById('fn-'+type).textContent = file.name;
+  document.getElementById('btn-upload').disabled = !(picked.html && picked.json);
+}
+
+function readText(file) {
+  return new Promise((res,rej) => { const r = new FileReader(); r.onload = e => res(e.target.result); r.onerror = rej; r.readAsText(file); });
+}
+
+async function getFileSHA(path, token) {
+  try {
+    const r = await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`, { headers: { Authorization: `token ${token}` }});
+    if (r.ok) { const d = await r.json(); return d.sha; }
+  } catch(e) {}
+  return null;
+}
+
+async function putFile(path, content, token) {
+  const sha = await getFileSHA(path, token);
+  const body = { message: `Add SOP: ${path}`, content: btoa(unescape(encodeURIComponent(content))), branch: BRANCH };
+  if (sha) body.sha = sha;
+  const r = await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`, {
+    method: 'PUT',
+    headers: { Authorization: `token ${token}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  if (!r.ok) { const e = await r.json(); throw new Error(e.message || 'GitHub API error'); }
+}
+
+async function doUpload() {
+  const token = getToken();
+  if (!token) { setStatus('upload-status','error','No GitHub token set.'); return; }
+  const btn = document.getElementById('btn-upload');
+  btn.disabled = true;
+  btn.textContent = 'Uploading...';
+
+  try {
+    setStatus('upload-status','loading','Reading files...');
+    const htmlText = await readText(picked.html);
+    const jsonText = await readText(picked.json);
+
+    let meta;
+    try { meta = JSON.parse(jsonText); } catch(e) { throw new Error('JSON file is not valid JSON. Check the file and try again.'); }
+    if (!meta.id || !meta.title) throw new Error('JSON file is missing required fields (id and title).');
+
+    setStatus('upload-status','loading','Uploading HTML file...');
+    await putFile(`sops/${picked.html.name}`, htmlText, token);
+
+    setStatus('upload-status','loading','Uploading JSON file...');
+    await putFile(`sops/${picked.json.name}`, jsonText, token);
+
+    setStatus('upload-status','success',`&#x2705; <strong>${meta.title}</strong> uploaded. GitHub Actions will rebuild the index in ~60 seconds. Refresh the page to see it.`);
+    btn.textContent = 'Done!';
+    setTimeout(() => { closeModal('upload-modal'); btn.textContent = 'Upload to GitHub'; btn.disabled = false; }, 6000);
+
+  } catch(e) {
+    setStatus('upload-status','error','&#x274C; ' + e.message);
+    btn.textContent = 'Upload to GitHub';
+    btn.disabled = false;
+  }
+}
+
+/* LOAD & RENDER */
 async function loadSOPs() {
   try {
-    const res = await fetch('sops.json');
-    if (!res.ok) throw new Error('sops.json not found');
-    SOPS = await res.json();
-  } catch (e) {
-    document.getElementById('sop-list').innerHTML = '<div class="empty-state"><div class="es-icon">&#x26A0;&#xFE0F;</div><p>Could not load sops.json. Make sure the file exists in the repo root.</p></div>';
+    const r = await fetch('sops.json?t=' + Date.now());
+    if (!r.ok) throw new Error();
+    SOPS = await r.json();
+  } catch(e) {
+    document.getElementById('sop-list').innerHTML = '<div class="empty-state"><div class="es-icon">&#x26A0;&#xFE0F;</div><p>Could not load sops.json. Check the file exists in the repo root.</p></div>';
     return;
   }
   const now = new Date();
-  document.getElementById('last-updated').textContent = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+  document.getElementById('last-updated').textContent = now.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
   document.getElementById('total-count').textContent = SOPS.length;
-  const cats = new Set(SOPS.map(s => s.category));
-  document.getElementById('cat-count').textContent = cats.size;
+  document.getElementById('cat-count').textContent = new Set(SOPS.map(s => s.category)).size;
   filterSOPs();
-}
-
-const _LEGACY = [
-  {
-    id: "transaction-reconciler",
-    title: "Transaction Reconciler",
-    desc: "Daily reconciliation of financial transactions across Santander and Zempler accounts. Matches, categorises, and writes to Airtable with Slack summary.",
-    category: "finance",
-    icon: "&#x1F4B3;",
-    version: "1.0",
-    updated: "2026-04-01",
-    file: "sops/transaction-reconciler.html"
-  },
-  {
-    id: "cash-flow-forecast",
-    title: "Cash Flow Forecast",
-    desc: "30-day rolling cash flow forecast combining Santander and Zempler accounts. Projects rental income and fixed costs with interactive HTML dashboard.",
-    category: "finance",
-    icon: "&#x1F4C8;",
-    version: "1.0",
-    updated: "2026-04-01",
-    file: "sops/cash-flow-forecast.html"
-  },
-  {
-    id: "contractor-job-creator",
-    title: "Contractor Job Creator",
-    desc: "Logs maintenance jobs to Airtable Tasks table with Maintenance Ticket checkbox. Notifies contractors via Slack.",
-    category: "property",
-    icon: "&#x1F528;",
-    version: "1.0",
-    updated: "2026-04-01",
-    file: "sops/contractor-job-creator.html"
-  },
-  {
-    id: "airtable-tenant-onboarding",
-    title: "Tenant Onboarding",
-    desc: "Two-phase automation: adds new tenant to Tenants table, then creates their Tenancy record. End-to-end new tenant setup.",
-    category: "tenant",
-    icon: "&#x1F3E0;",
-    version: "1.0",
-    updated: "2026-04-01",
-    file: "sops/airtable-tenant-onboarding.html"
-  },
-  {
-    id: "tenant-complaint-handler",
-    title: "Tenant Complaint Handler",
-    desc: "Handles tenant complaints end-to-end. Sources context from Airtable, Gmail and Google Drive then drafts a reply for approval before sending.",
-    category: "tenant",
-    icon: "&#x1F4AC;",
-    version: "1.0",
-    updated: "2026-04-01",
-    file: "sops/tenant-complaint-handler.html"
-  },
-  {
-    id: "airtable-tenancy-ender",
-    title: "Tenancy Ender",
-    desc: "Automates ending a tenancy: sets end date, removes unit link, sets tenant to Former, marks unit as Void.",
-    category: "tenant",
-    icon: "&#x1F6AA;",
-    version: "1.0",
-    updated: "2026-04-01",
-    file: "sops/airtable-tenancy-ender.html"
-  },
-  {
-    id: "gmail-respond-manager",
-    title: "Gmail Respond Manager",
-    desc: "Manages the To Respond email workflow for kevin@runpreneur.org.uk. Batch drafts replies, presents for approval, creates Gmail drafts, and labels emails.",
-    category: "comms",
-    icon: "&#x1F4E7;",
-    version: "1.0",
-    updated: "2026-04-01",
-    file: "sops/gmail-respond-manager.html"
-  },
-  {
-    id: "gmail-to-airtable-inbound",
-    title: "Gmail to Airtable Inbound",
-    desc: "Syncs To Respond emails to Airtable Operations Director base as Inbound Comms task records.",
-    category: "comms",
-    icon: "&#x1F4E5;",
-    version: "1.0",
-    updated: "2026-04-01",
-    file: "sops/gmail-to-airtable-inbound.html"
-  },
-  {
-    id: "post-manager",
-    title: "Post Manager",
-    desc: "Processes scanned post PDFs: splits documents, classifies, assigns urgency, recommends actions, gets approval, and updates Airtable.",
-    category: "comms",
-    icon: "&#x1F4EA;",
-    version: "1.0",
-    updated: "2026-04-01",
-    file: "sops/post-manager.html"
-  },
-  {
-    id: "weekly-checkin-task-manager",
-    title: "Weekly Check-in Task Manager",
-    desc: "Extracts and assigns tasks from weekly check-ins with standard rules for assignees, duration, and project. Requires approval before Airtable creation.",
-    category: "ops",
-    icon: "&#x1F5D3;",
-    version: "1.0",
-    updated: "2026-04-01",
-    file: "sops/weekly-checkin-task-manager.html"
-  },
-  {
-    id: "airtable-task-creator",
-    title: "Airtable Task Creator",
-    desc: "Creates tasks in the Operations Director Airtable base with two-phase automation workflow and approval gate.",
-    category: "ops",
-    icon: "&#x2705;",
-    version: "1.0",
-    updated: "2026-04-01",
-    file: "sops/airtable-task-creator.html"
-  },
-  {
-    id: "airtable-cost-creator",
-    title: "Airtable Cost Creator",
-    desc: "Adds new fixed costs to the Operations Director Airtable base with name, due date, business, frequency, expected cost, and categories.",
-    category: "ops",
-    icon: "&#x1F4B0;",
-    version: "1.0",
-    updated: "2026-04-01",
-    file: "sops/airtable-cost-creator.html"
-  },
-  {
-    id: "tenant-doc-generator",
-    title: "Tenant Document Generator",
-    desc: "Generates AST and Proof of Residency documents using predefined templates and tenant-specific variables, ready for e-signing.",
-    category: "tenant",
-    icon: "&#x1F4CB;",
-    version: "1.0",
-    updated: "2026-04-01",
-    file: "sops/tenant-doc-generator.html"
-  },
-  {
-    id: "schedule-of-works",
-    title: "Schedule of Works",
-    desc: "Generates a comprehensive defect report and repair guide for contractors from a property video walkthrough.",
-    category: "property",
-    icon: "&#x1F3D7;",
-    version: "1.0",
-    updated: "2026-04-01",
-    file: "sops/schedule-of-works.html"
-  },
-  {
-    id: "daily-schedule",
-    title: "Daily Schedule Planner",
-    desc: "Plans and organises Kevin's day around fixed appointments and departure times. Turns a task list into a structured calendar.",
-    category: "ops",
-    icon: "&#x23F0;",
-    version: "1.0",
-    updated: "2026-04-01",
-    file: "sops/daily-schedule.html"
-  },
-  {
-    id: "uc47-form-automation",
-    title: "UC47 Form Automation",
-    desc: "Automates completion of the UC47 Director-Landlord payment form for Universal Credit tenants.",
-    category: "tenant",
-    icon: "&#x1F4C4;",
-    version: "1.0",
-    updated: "2026-04-01",
-    file: "sops/uc47-form-automation.html"
-  },
-  {
-    id: "meeting-manager",
-    title: "Meeting Manager",
-    desc: "Manages meeting rescheduling and invitations. Notifies all attendees via Slack (primary) or Email (fallback).",
-    category: "comms",
-    icon: "&#x1F4C5;",
-    version: "1.0",
-    updated: "2026-04-01",
-    file: "sops/meeting-manager.html"
-  },
-  {
-    id: "commercial-loan-agreement-generator",
-    title: "Commercial Loan Agreement Generator",
-    desc: "Generates commercial loan agreements, calculates repayments, and creates associated Airtable fixed costs and tasks.",
-    category: "finance",
-    icon: "&#x1F4DD;",
-    version: "1.0",
-    updated: "2026-04-01",
-    file: "sops/commercial-loan-agreement-generator.html"
-  },
-  {
-    id: "evernote-pdf-processor",
-    title: "Evernote PDF Processor",
-    desc: "Splits multi-document PDFs from Evernote into individual records and creates Airtable task entries for the Inbound Comms interface.",
-    category: "system",
-    icon: "&#x1F4C2;",
-    version: "1.0",
-    updated: "2026-04-01",
-    file: "sops/evernote-pdf-processor.html"
-  }
-];
-
-let currentFilter = 'all';
-loadSOPs();
-
-function catLabel(cat) {
-  const map = { finance: 'Finance', property: 'Property', tenant: 'Tenant', comms: 'Comms', ops: 'Ops', content: 'Content', system: 'System' };
-  return map[cat] || cat;
-}
-
-function formatDate(d) {
-  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  const [y,m,day] = d.split('-');
-  return `${parseInt(day)} ${months[parseInt(m)-1]} ${y}`;
 }
 
 function setFilter(cat, btn) {
@@ -415,58 +376,58 @@ function setFilter(cat, btn) {
 function filterSOPs() {
   const q = document.getElementById('search').value.toLowerCase();
   const filtered = SOPS.filter(s => {
-    const matchCat = currentFilter === 'all' || s.category === currentFilter;
-    const matchSearch = !q || s.title.toLowerCase().includes(q) || s.desc.toLowerCase().includes(q) || s.category.toLowerCase().includes(q);
-    return matchCat && matchSearch;
+    const mc = currentFilter === 'all' || s.category === currentFilter;
+    const ms = !q || s.title.toLowerCase().includes(q) || s.desc.toLowerCase().includes(q) || s.category.toLowerCase().includes(q);
+    return mc && ms;
   });
   renderSOPs(filtered);
 }
 
 function renderSOPs(list) {
-  const container = document.getElementById('sop-list');
+  const el = document.getElementById('sop-list');
   document.getElementById('sop-count').textContent = list.length + ' SOP' + (list.length !== 1 ? 's' : '');
-
-  if (list.length === 0) {
-    container.innerHTML = '<div class="empty-state"><div class="es-icon">&#x1F50D;</div><p>No SOPs match your search.</p></div>';
-    return;
-  }
-
-  const groups = {};
-  list.forEach(s => {
-    if (!groups[s.category]) groups[s.category] = [];
-    groups[s.category].push(s);
-  });
+  if (!list.length) { el.innerHTML = '<div class="empty-state"><div class="es-icon">&#x1F50D;</div><p>No SOPs match your search.</p></div>'; return; }
 
   const catOrder = ['finance','property','tenant','comms','ops','content','system'];
-  let html = '';
+  const catLabel = {finance:'Finance',property:'Property',tenant:'Tenant',comms:'Comms',ops:'Ops',content:'Content',system:'System'};
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const groups = {};
+  list.forEach(s => { if (!groups[s.category]) groups[s.category]=[]; groups[s.category].push(s); });
 
+  let html = '';
   catOrder.forEach(cat => {
     if (!groups[cat]) return;
-    const label = catLabel(cat);
-    html += `<div class="section-heading">${label}<span></span></div>`;
-    html += '<div class="sop-grid">';
+    const label = catLabel[cat] || cat;
+    html += `<div class="section-heading">${label}<span></span></div><div class="sop-grid">`;
     groups[cat].forEach(s => {
-      html += `
-        <a href="${s.file}" target="_blank" class="sop-card">
-          <div class="sop-card-top">
-            <div class="sop-card-icon icon-${s.category}">${s.icon}</div>
-            <h3>${s.title}</h3>
-            <p class="sop-desc">${s.desc}</p>
-          </div>
-          <div class="sop-card-bottom">
-            <span class="sop-meta">Updated ${formatDate(s.updated)}</span>
-            <span class="sop-tag cat-${s.category}">${label}</span>
-          </div>
-        </a>`;
+      const [y,m,d] = (s.updated||'').split('-');
+      const ds = (y && m && d) ? `${parseInt(d)} ${months[parseInt(m)-1]} ${y}` : '';
+      html += `<a href="${s.file}" target="_blank" class="sop-card">
+        <div class="sop-card-top">
+          <div class="sop-card-icon icon-${s.category}">${s.icon||'&#x1F4C4;'}</div>
+          <h3>${s.title}</h3>
+          <p class="sop-desc">${s.desc}</p>
+        </div>
+        <div class="sop-card-bottom">
+          <span class="sop-meta">${ds ? 'Updated '+ds : ''}</span>
+          <span class="sop-tag cat-${s.category}">${label}</span>
+        </div>
+      </a>`;
     });
     html += '</div>';
-    if (currentFilter === 'all') html += '<div style="margin-bottom: 1.75rem;"></div>';
+    if (currentFilter === 'all') html += '<div style="margin-bottom:1.75rem;"></div>';
   });
-
-  container.innerHTML = html;
+  el.innerHTML = html;
 }
 
+function setStatus(id, type, msg) {
+  const el = document.getElementById(id);
+  el.className = 'status-msg ' + type;
+  el.innerHTML = msg;
+}
 
+updateTokenUI();
+loadSOPs();
 </script>
 </body>
 </html>
