@@ -1,5 +1,35 @@
 [
   {
+    "id": "airtable-cost-creator",
+    "title": "Airtable Cost Creator",
+    "desc": "Add new fixed cost records to the Operations Director Airtable base with correct linked fields and automatic payment status.",
+    "category": "finance",
+    "icon": "&#x1F4B3;",
+    "version": "1.0",
+    "updated": "2025-04-09",
+    "file": "sops/airtable-cost-creator.html"
+  },
+  {
+    "id": "cash-flow-forecast",
+    "title": "Cash Flow Forecast",
+    "desc": "Generate a 30-day rolling cash flow forecast combining Santander and TNT Mgt Zempler accounts from live Airtable data.",
+    "category": "finance",
+    "icon": "&#x1F4CA;",
+    "version": "1.0",
+    "updated": "2025-04-09",
+    "file": "sops/cash-flow-forecast.html"
+  },
+  {
+    "id": "commercial-loan-agreement-generator",
+    "title": "Commercial Loan Agreement Generator",
+    "desc": "Generate a commercial loan agreement PDF from variable inputs, with auto-calculated repayment schedule and first payment date.",
+    "category": "finance",
+    "icon": "&#x1F4DC;",
+    "version": "1.0",
+    "updated": "2025-04-09",
+    "file": "sops/commercial-loan-agreement-generator.html"
+  },
+  {
     "id": "transaction-reconciler",
     "title": "Transaction Reconciler",
     "desc": "Daily reconciliation of financial transactions in the Operations Director Airtable base, matching unreconciled transactions against history and posting a summary to Slack after approval.",
@@ -10,6 +40,146 @@
     "file": "sops/transaction-reconciler.html"
   },
   {
+    "id": "airtable-tenancy-creator",
+    "title": "Airtable Tenancy Creator",
+    "desc": "Create a new tenancy record linked to an existing tenant, with auto-calculated rent due date and inherited payment defaults.",
+    "category": "property",
+    "icon": "&#x1F3E0;",
+    "version": "1.0",
+    "updated": "2025-04-09",
+    "file": "sops/airtable-tenancy-creator.html"
+  },
+  {
+    "id": "airtable-tenancy-ender",
+    "title": "Airtable Tenancy Ender",
+    "desc": "End a tenancy by updating the Tenancies, Tenants, and Rental Units tables — setting end date, clearing unit, and marking the property void.",
+    "category": "property",
+    "icon": "&#x1F51A;",
+    "version": "1.0",
+    "updated": "2025-04-09",
+    "file": "sops/airtable-tenancy-ender.html"
+  },
+  {
+    "id": "contractor-job-creator",
+    "title": "Contractor Job Creator",
+    "desc": "Log contractor maintenance jobs to Airtable with the Maintenance Ticket ticked and notify the assigned contractor via Slack.",
+    "category": "property",
+    "icon": "&#x1F527;",
+    "version": "1.0",
+    "updated": "2025-04-09",
+    "file": "sops/contractor-job-creator.html"
+  },
+  {
+    "id": "schedule-of-works",
+    "title": "Schedule of Works",
+    "desc": "Analyse a property walkthrough video to identify defects and generate an idiot-proof contractor-ready Schedule of Works in Markdown and PDF.",
+    "category": "property",
+    "icon": "&#x1F3D7;&#xFE0F;",
+    "version": "1.0",
+    "updated": "2025-04-09",
+    "file": "sops/schedule-of-works.html"
+  },
+  {
+    "id": "airtable-tenant-creator",
+    "title": "Airtable Tenant Creator",
+    "desc": "Add a new tenant record to the Tenants table in the Operations Director Airtable base with correct field mappings and Active status.",
+    "category": "tenant",
+    "icon": "&#x1F464;",
+    "version": "1.0",
+    "updated": "2025-04-09",
+    "file": "sops/airtable-tenant-creator.html"
+  },
+  {
+    "id": "airtable-tenant-onboarding",
+    "title": "Airtable Tenant Onboarding",
+    "desc": "End-to-end three-phase workflow to create a tenant record, create the linked tenancy, and update the rental unit to Occupied.",
+    "category": "tenant",
+    "icon": "&#x1F3E1;",
+    "version": "1.0",
+    "updated": "2025-04-09",
+    "file": "sops/airtable-tenant-onboarding.html"
+  },
+  {
+    "id": "tenant-complaint-handler",
+    "title": "Tenant Complaint Handler",
+    "desc": "Handle tenant complaints end-to-end — source context from all systems, draft a firm and fair reply signed by Erica, and action post-approval.",
+    "category": "tenant",
+    "icon": "&#x1F3D8;&#xFE0F;",
+    "version": "1.0",
+    "updated": "2025-04-09",
+    "file": "sops/tenant-complaint-handler.html"
+  },
+  {
+    "id": "tenant-doc-generator",
+    "title": "Tenant Document Generator",
+    "desc": "Generate an AST agreement and Proof of Residency letter from four tenant inputs, converted to PDF ready for e-signing.",
+    "category": "tenant",
+    "icon": "&#x1F4C4;",
+    "version": "1.0",
+    "updated": "2025-04-09",
+    "file": "sops/tenant-doc-generator.html"
+  },
+  {
+    "id": "uc47-form-automation",
+    "title": "UC47 Form Automation",
+    "desc": "Complete the UC47 DWP online form for Universal Credit tenants using Airtable data, handling email verification and requiring Kevin's approval before submission.",
+    "category": "tenant",
+    "icon": "&#x1F3DB;&#xFE0F;",
+    "version": "1.0",
+    "updated": "2025-04-09",
+    "file": "sops/uc47-form-automation.html"
+  },
+  {
+    "id": "evernote-pdf-processor",
+    "title": "Evernote PDF Processor",
+    "desc": "Split multi-document PDFs from Evernote into separate files and create individual Inbound Comms task records in Airtable.",
+    "category": "comms",
+    "icon": "&#x1F4CE;",
+    "version": "1.0",
+    "updated": "2025-04-09",
+    "file": "sops/evernote-pdf-processor.html"
+  },
+  {
+    "id": "gmail-respond-manager",
+    "title": "Gmail Respond Manager",
+    "desc": "Fetch To Respond emails, draft replies using the knowledge base, batch-present for approval, create Gmail drafts, and manage label transitions.",
+    "category": "comms",
+    "icon": "&#x1F4E7;",
+    "version": "1.0",
+    "updated": "2025-04-09",
+    "file": "sops/gmail-respond-manager.html"
+  },
+  {
+    "id": "gmail-to-airtable-inbound",
+    "title": "Gmail to Airtable Inbound",
+    "desc": "Sync emails labelled To Respond in kevin@runpreneur.org.uk to Airtable as deduplicated Inbound Comms task records.",
+    "category": "comms",
+    "icon": "&#x1F4E8;",
+    "version": "1.0",
+    "updated": "2025-04-09",
+    "file": "sops/gmail-to-airtable-inbound.html"
+  },
+  {
+    "id": "adobe-sign-field-setup",
+    "title": "Adobe Sign Field Setup",
+    "desc": "Guides the full Adobe Sign e-signature workflow including recipient setup, field reassignment, and workarounds for the Chrome extension viewport conflict.",
+    "category": "ops",
+    "icon": "&#x270D;&#xFE0F;",
+    "version": "1.0",
+    "updated": "2025-04-09",
+    "file": "sops/adobe-sign-field-setup.html"
+  },
+  {
+    "id": "airtable-task-creator",
+    "title": "Airtable Task Creator",
+    "desc": "Create tasks in the Operations Director Airtable base using a two-phase workflow with Slack notification to non-Kevin assignees.",
+    "category": "ops",
+    "icon": "&#x2705;",
+    "version": "1.0",
+    "updated": "2025-04-09",
+    "file": "sops/airtable-task-creator.html"
+  },
+  {
     "id": "daily-schedule",
     "title": "Daily Schedule",
     "desc": "Build a practical, realistic daily schedule from a list of tasks and constraints, then add each block to Google Calendar after confirmation.",
@@ -18,5 +188,65 @@
     "version": "1.0",
     "updated": "2025-04-09",
     "file": "sops/daily-schedule.html"
+  },
+  {
+    "id": "meeting-manager",
+    "title": "Meeting Manager",
+    "desc": "Reschedule or create meetings in Google Calendar and notify all attendees via Slack DM or email fallback.",
+    "category": "ops",
+    "icon": "&#x1F4C5;",
+    "version": "1.0",
+    "updated": "2025-04-09",
+    "file": "sops/meeting-manager.html"
+  },
+  {
+    "id": "post-manager",
+    "title": "Post Manager",
+    "desc": "Process scanned post PDFs — classify each document by urgency, recommend actions from the knowledge base, get approval, then send a Slack summary.",
+    "category": "ops",
+    "icon": "&#x1F4EC;",
+    "version": "1.0",
+    "updated": "2025-04-09",
+    "file": "sops/post-manager.html"
+  },
+  {
+    "id": "similarweb-analytics",
+    "title": "SimilarWeb Analytics",
+    "desc": "Retrieve traffic, engagement, ranking, traffic sources, and geographic data for any domain using the SimilarWeb API.",
+    "category": "ops",
+    "icon": "&#x1F4C8;",
+    "version": "1.0",
+    "updated": "2025-04-09",
+    "file": "sops/similarweb-analytics.html"
+  },
+  {
+    "id": "weekly-checkin-task-manager",
+    "title": "Weekly Check-in Task Manager",
+    "desc": "Extract action items from weekly check-in transcripts and create standardised Airtable tasks after Kevin's authorisation.",
+    "category": "ops",
+    "icon": "&#x1F4CB;",
+    "version": "1.0",
+    "updated": "2025-04-09",
+    "file": "sops/weekly-checkin-task-manager.html"
+  },
+  {
+    "id": "video-generator",
+    "title": "Video Generator",
+    "desc": "Professional five-phase AI video production workflow from brief to finished clips, covering reference images, keyframes, video, and audio mixing.",
+    "category": "content",
+    "icon": "&#x1F3AC;",
+    "version": "1.0",
+    "updated": "2025-04-09",
+    "file": "sops/video-generator.html"
+  },
+  {
+    "id": "skill-creator-from-manus",
+    "title": "Skill Creator",
+    "desc": "Guide for creating or updating Claude Cowork skills with correct SKILL.md structure, bundled resources, and concise workflow instructions.",
+    "category": "system",
+    "icon": "&#x1F6E0;&#xFE0F;",
+    "version": "1.0",
+    "updated": "2025-04-09",
+    "file": "sops/skill-creator-from-manus.html"
   }
 ]
