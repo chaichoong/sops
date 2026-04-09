@@ -1,0 +1,10 @@
+{
+  "id": "schedule-of-works",
+  "title": "Schedule of Works",
+  "desc": "Analyse a property walkthrough video to identify defects and generate an idiot-proof contractor-ready Schedule of Works in Markdown and PDF.",
+  "category": "property",
+  "icon": "&#x1F3D7;&#xFE0F;",
+  "version": "1.0",
+  "updated": "2025-04-09",
+  "file": "sops/schedule-of-works.html"
+}

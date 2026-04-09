@@ -1,0 +1,10 @@
+{
+  "id": "airtable-tenancy-ender",
+  "title": "Airtable Tenancy Ender",
+  "desc": "End a tenancy by updating the Tenancies, Tenants, and Rental Units tables \u2014 setting end date, clearing unit, and marking the property void.",
+  "category": "property",
+  "icon": "&#x1F51A;",
+  "version": "1.0",
+  "updated": "2025-04-09",
+  "file": "sops/airtable-tenancy-ender.html"
+}

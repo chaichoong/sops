@@ -1,0 +1,10 @@
+{
+  "id": "tenant-complaint-handler",
+  "title": "Tenant Complaint Handler",
+  "desc": "Handle tenant complaints end-to-end \u2014 source context from all systems, draft a firm and fair reply signed by Erica, and action post-approval.",
+  "category": "tenant",
+  "icon": "&#x1F3D8;&#xFE0F;",
+  "version": "1.0",
+  "updated": "2025-04-09",
+  "file": "sops/tenant-complaint-handler.html"
+}

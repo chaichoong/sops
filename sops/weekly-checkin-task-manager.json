@@ -1,0 +1,10 @@
+{
+  "id": "weekly-checkin-task-manager",
+  "title": "Weekly Check-in Task Manager",
+  "desc": "Extract action items from weekly check-in transcripts and create standardised Airtable tasks after Kevin's authorisation.",
+  "category": "ops",
+  "icon": "&#x1F4CB;",
+  "version": "1.0",
+  "updated": "2025-04-09",
+  "file": "sops/weekly-checkin-task-manager.html"
+}

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Airtable Tenant Creator &mdash; Standard Operating Procedure</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.6; color: #1e293b; background: #f1f5f9;
+}
+:root {
+  --blue-50:#eff6ff;--blue-100:#dbeafe;--blue-200:#bfdbfe;--blue-500:#3b82f6;--blue-600:#2563eb;--blue-700:#1d4ed8;--blue-800:#1e40af;--blue-900:#1e3a5f;
+  --indigo-50:#eef2ff;--indigo-100:#e0e7ff;--indigo-500:#6366f1;--indigo-600:#4f46e5;--indigo-700:#4338ca;
+  --green-50:#f0fdf4;--green-100:#dcfce7;--green-500:#22c55e;--green-600:#16a34a;--green-700:#15803d;
+  --amber-50:#fffbeb;--amber-100:#fef3c7;--amber-500:#f59e0b;--amber-600:#d97706;
+  --red-50:#fef2f2;--red-100:#fee2e2;--red-500:#ef4444;--red-600:#dc2626;
+  --purple-50:#faf5ff;--purple-500:#a855f7;--purple-600:#9333ea;
+  --slate-50:#f8fafc;--slate-100:#f1f5f9;--slate-200:#e2e8f0;--slate-300:#cbd5e1;--slate-400:#94a3b8;--slate-500:#64748b;--slate-600:#475569;--slate-700:#334155;--slate-800:#1e293b;
+  --shadow:0 1px 3px rgba(0,0,0,0.1),0 1px 2px rgba(0,0,0,0.06);--shadow-md:0 4px 6px -1px rgba(0,0,0,0.1),0 2px 4px -1px rgba(0,0,0,0.06);--shadow-lg:0 10px 15px -3px rgba(0,0,0,0.1),0 4px 6px -2px rgba(0,0,0,0.05);
+  --radius:12px;--radius-sm:8px;
+}
+.header { background: linear-gradient(135deg, var(--blue-800) 0%, var(--indigo-700) 100%); color: white; padding: 2.5rem 2rem 2rem; position: relative; overflow: hidden; }
+.header::after { content:''; position:absolute; top:-50%; right:-10%; width:500px; height:500px; background:radial-gradient(circle,rgba(255,255,255,0.08) 0%,transparent 70%); border-radius:50%; }
+.header-inner { max-width:1100px; margin:0 auto; position:relative; z-index:1; }
+.header-back { display:inline-flex; align-items:center; gap:0.4rem; font-size:0.82rem; opacity:0.7; text-decoration:none; color:white; margin-bottom:1rem; transition:opacity 0.15s; }
+.header-back:hover { opacity:1; }
+.header h1 { font-size:2.2rem; font-weight:700; margin-bottom:0.3rem; letter-spacing:-0.5px; }
+.header .subtitle { font-size:1.05rem; opacity:0.85; }
+.header .version { font-size:0.85rem; opacity:0.6; margin-top:0.5rem; }
+.container { max-width:1100px; margin:0 auto; padding:0 1.5rem 4rem; }
+.section { margin-top:2.5rem; }
+.section-title { font-size:1.5rem; font-weight:700; color:var(--blue-800); padding-bottom:0.5rem; border-bottom:3px solid var(--blue-200); margin-bottom:1.25rem; display:flex; align-items:center; gap:0.5rem; }
+.section-title .icon { font-size:1.4rem; }
+.card { background:white; border-radius:var(--radius); box-shadow:var(--shadow); padding:1.5rem; margin-bottom:1.25rem; border:1px solid var(--slate-200); }
+.card-header { font-size:1.1rem; font-weight:600; color:var(--slate-800); margin-bottom:0.75rem; display:flex; align-items:center; gap:0.5rem; }
+.quick-ref { background:linear-gradient(135deg,var(--blue-50) 0%,var(--indigo-50) 100%); border:2px solid var(--blue-200); border-radius:var(--radius); padding:1.5rem; margin-top:-1rem; position:relative; z-index:2; box-shadow:var(--shadow-lg); }
+.quick-ref h2 { font-size:1.2rem; color:var(--blue-800); margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem; }
+.qr-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:0.75rem; }
+.qr-item { background:white; border-radius:var(--radius-sm); padding:0.75rem 1rem; border-left:4px solid var(--blue-500); font-size:0.88rem; }
+.qr-item .qr-label { font-weight:600; color:var(--slate-600); font-size:0.75rem; text-transform:uppercase; letter-spacing:0.5px; }
+.qr-item .qr-value { color:var(--slate-800); margin-top:0.15rem; word-break:break-all; }
+.toc { background:white; border-radius:var(--radius); box-shadow:var(--shadow); padding:1.5rem; border:1px solid var(--slate-200); }
+.toc h2 { font-size:1.15rem; color:var(--blue-800); margin-bottom:1rem; }
+.toc-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:0.35rem 1.5rem; }
+.toc a { display:flex; align-items:center; gap:0.5rem; color:var(--slate-700); text-decoration:none; padding:0.35rem 0.5rem; border-radius:6px; font-size:0.9rem; transition:background 0.15s; }
+.toc a:hover { background:var(--blue-50); color:var(--blue-700); }
+.toc a .toc-num { display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:50%; background:var(--blue-100); color:var(--blue-700); font-size:0.7rem; font-weight:700; flex-shrink:0; }
+.flow { display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:0; padding:1.5rem 0; }
+.flow-step { background:white; border:2px solid var(--blue-200); border-radius:var(--radius-sm); padding:0.75rem 1.1rem; text-align:center; font-size:0.85rem; font-weight:600; color:var(--slate-700); min-width:110px; }
+.flow-step.primary { background:var(--blue-600); color:white; border-color:var(--blue-700); }
+.flow-step.success { background:var(--green-600); color:white; border-color:var(--green-700); }
+.flow-step.warning { background:var(--amber-500); color:white; border-color:var(--amber-600); }
+.flow-step.purple { background:var(--purple-600); color:white; border-color:var(--purple-600); }
+.flow-step .flow-icon { font-size:1.3rem; display:block; margin-bottom:0.25rem; }
+.flow-step .flow-sub { font-weight:400; font-size:0.75rem; opacity:0.85; margin-top:0.15rem; }
+.flow-arrow { font-size:1.4rem; color:var(--slate-400); padding:0 0.3rem; flex-shrink:0; }
+.label-table { width:100%; border-collapse:separate; border-spacing:0; font-size:0.88rem; }
+.label-table th { background:var(--blue-700); color:white; padding:0.75rem 1rem; text-align:left; font-weight:600; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.5px; }
+.label-table th:first-child { border-radius:var(--radius-sm) 0 0 0; }
+.label-table th:last-child { border-radius:0 var(--radius-sm) 0 0; }
+.label-table td { padding:0.65rem 1rem; border-bottom:1px solid var(--slate-200); vertical-align:top; }
+.label-table tr:last-child td { border-bottom:none; }
+.label-table tr:nth-child(even) td { background:var(--slate-50); }
+.label-table tr:hover td { background:var(--blue-50); }
+.label-badge { display:inline-block; padding:0.2rem 0.6rem; border-radius:999px; font-weight:600; font-size:0.78rem; white-space:nowrap; }
+.lb-blue { background:#dbeafe; color:#1d4ed8; } .lb-amber { background:#fef3c7; color:#92400e; }
+.lb-red { background:#fee2e2; color:#991b1b; } .lb-green { background:#dcfce7; color:#166534; }
+.lb-purple { background:#e0e7ff; color:#3730a3; }
+.wf-card { background:white; border-radius:var(--radius); box-shadow:var(--shadow); border:1px solid var(--slate-200); overflow:hidden; margin-bottom:1.5rem; }
+.wf-header { padding:1rem 1.5rem; display:flex; align-items:center; gap:0.75rem; border-bottom:1px solid var(--slate-200); }
+.wf-num { display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:50%; font-weight:700; font-size:1rem; flex-shrink:0; color:white; background:var(--blue-600); }
+.wf-header h3 { font-size:1.1rem; font-weight:700; color:var(--slate-800); }
+.wf-header .wf-tag { font-size:0.75rem; padding:0.15rem 0.5rem; border-radius:999px; background:var(--slate-100); color:var(--slate-600); font-weight:500; }
+.wf-body { padding:1.25rem 1.5rem; }
+.steps { counter-reset:step; list-style:none; padding:0; }
+.steps li { position:relative; padding:0.5rem 0 0.5rem 2.5rem; font-size:0.9rem; line-height:1.5; }
+.steps li::before { counter-increment:step; content:counter(step); position:absolute; left:0; top:0.45rem; width:24px; height:24px; border-radius:50%; background:var(--blue-100); color:var(--blue-700); font-size:0.75rem; font-weight:700; display:flex; align-items:center; justify-content:center; }
+.steps li + li { border-top:1px solid var(--slate-100); }
+.info-box { padding:0.85rem 1rem; border-radius:var(--radius-sm); font-size:0.88rem; margin:0.75rem 0; display:flex; align-items:flex-start; gap:0.6rem; }
+.info-box.info { background:var(--blue-50); border-left:4px solid var(--blue-500); color:var(--blue-800); }
+.info-box.warn { background:var(--amber-50); border-left:4px solid var(--amber-500); color:#92400e; }
+.info-box.danger { background:var(--red-50); border-left:4px solid var(--red-500); color:#991b1b; }
+.info-box.tip { background:var(--green-50); border-left:4px solid var(--green-500); color:var(--green-700); }
+.info-box .ib-icon { font-size:1.1rem; flex-shrink:0; margin-top:0.05rem; }
+code { background:var(--slate-100); padding:0.15rem 0.4rem; border-radius:4px; font-size:0.82rem; font-family:'SF Mono',Monaco,Consolas,monospace; color:var(--indigo-600); }
+.ts-item { margin-bottom:0.75rem; }
+.ts-problem { font-weight:600; color:var(--red-600); font-size:0.9rem; }
+.ts-solution { font-size:0.88rem; color:var(--slate-700); margin-top:0.2rem; padding-left:1rem; }
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+strong { color:var(--slate-800); } a { color:var(--blue-600); }
+p { margin-bottom:0.5rem; } ul,ol { margin-left:1.25rem; margin-bottom:0.5rem; }
+li { margin-bottom:0.2rem; font-size:0.9rem; } hr { border:none; border-top:1px solid var(--slate-200); margin:1.5rem 0; }
+@media (max-width:768px) {
+  .header h1 { font-size:1.6rem; } .qr-grid { grid-template-columns:1fr; }
+  .toc-grid { grid-template-columns:1fr; } .grid-2 { grid-template-columns:1fr; }
+  .flow { flex-direction:column; } .flow-arrow { transform:rotate(90deg); }
+  .container { padding:0 1rem 3rem; }
+}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="header-back">&#x2190; Back to SOP Index</a>
+    <h1>👤 Airtable Tenant Creator</h1>
+    <div class="subtitle">Standard Operating Procedure &mdash; Add a new tenant record to the Operations Director Airtable base</div>
+    <div class="version">Version 1.0 &bull; 09 Apr 2025 &bull; Owner: Kevin Brittain</div>
+  </div>
+</div>
+<div class="container">
+<div class="quick-ref">
+  <h2>&#x26A1; Quick Reference</h2>
+  <div class="qr-grid">
+    <div class="qr-item"><div class="qr-label">Trigger Phrase</div><div class="qr-value">"Add a tenant" / "New tenant"</div></div>
+    <div class="qr-item"><div class="qr-label">Skill File</div><div class="qr-value"><code>/mnt/skills/user/airtable-tenant-creator/SKILL.md</code></div></div>
+    <div class="qr-item"><div class="qr-label">Primary Tool(s)</div><div class="qr-value">Airtable</div></div>
+    <div class="qr-item"><div class="qr-label">Airtable Base</div><div class="qr-value">Operations Director (appnqjDpqDniH3IRl)</div></div>
+    <div class="qr-item"><div class="qr-label">Approval Required</div><div class="qr-value">No</div></div>
+    <div class="qr-item"><div class="qr-label">Slack Channel</div><div class="qr-value">N/A</div></div>
+    <div class="qr-item"><div class="qr-label">Category</div><div class="qr-value">tenant</div></div>
+    <div class="qr-item"><div class="qr-label">Estimated Duration</div><div class="qr-value">2 minutes</div></div>
+  </div>
+</div>
+<div class="section">
+  <div class="toc">
+    <h2>&#x1F4D1; Contents</h2>
+    <div class="toc-grid">
+      <a href="#purpose"><span class="toc-num">1</span> Purpose &amp; Scope</a>
+      <a href="#trigger"><span class="toc-num">2</span> When to Use This Skill</a>
+      <a href="#inputs"><span class="toc-num">3</span> Required Inputs</a>
+      <a href="#workflow"><span class="toc-num">4</span> Step-by-Step Workflow</a>
+      <a href="#tools"><span class="toc-num">5</span> Tools &amp; Integrations</a>
+      <a href="#approval"><span class="toc-num">6</span> Approval Gates</a>
+      <a href="#outputs"><span class="toc-num">7</span> Outputs &amp; Confirmations</a>
+      <a href="#errors"><span class="toc-num">8</span> Error Handling</a>
+      <a href="#troubleshooting"><span class="toc-num">9</span> Troubleshooting</a>
+      <a href="#changelog"><span class="toc-num">10</span> Changelog</a>
+    </div>
+  </div>
+</div>
+<div class="section" id="purpose">
+  <h2 class="section-title"><span class="icon">&#x1F3AF;</span> 1. Purpose &amp; Scope</h2>
+  <div class="card">
+    <p>Automates adding new tenant records to the Tenants table in the Operations Director Airtable base with correct field mappings and default values. Always sets Tenant Status to Active on creation. Designed to run as Phase 1 of the full tenant onboarding flow.</p>
+    <div class="info-box info"><span class="ib-icon">&#x2139;&#xFE0F;</span><div><strong>Scope:</strong> In scope: creating a single tenant record with the six required fields. Out of scope: creating the tenancy record (use airtable-tenancy-creator next) or updating existing tenant records.</div></div>
+  </div>
+</div>
+<div class="section" id="trigger">
+  <h2 class="section-title"><span class="icon">&#x1F4A1;</span> 2. When to Use This Skill</h2>
+  <div class="card">
+    <div class="card-header">&#x1F4AC; Trigger Phrases</div>
+    <p>Use this skill when Kevin or the team says any of the following:</p>
+    <ul><li>"Add a tenant" / "New tenant"</li><li>"Set up [name] in Airtable"</li><li>Runs as Phase 1 of airtable-tenant-onboarding</li></ul>
+    <div class="info-box warn"><span class="ib-icon">&#x26A0;&#xFE0F;</span><div><strong>Do not use this skill when:</strong> The tenant already exists in Airtable — search first before creating a duplicate.</div></div>
+  </div>
+</div>
+<div class="section" id="inputs">
+  <h2 class="section-title"><span class="icon">&#x1F4E5;</span> 3. Required Inputs</h2>
+  <div class="card">
+    <table class="label-table">
+      <thead><tr><th>Input</th><th>Required</th><th>Description</th><th>Example</th></tr></thead>
+      <tbody><tr><td><strong>Tenant Name</strong></td><td><span class="label-badge lb-red">Required</span></td><td>Full name of the tenant</td><td><em>John Smith</em></td></tr><tr><td><strong>Contact Number</strong></td><td><span class="label-badge lb-red">Required</span></td><td>Phone number</td><td><em>07700 900123</em></td></tr><tr><td><strong>Email Address</strong></td><td><span class="label-badge lb-red">Required</span></td><td>Primary email</td><td><em>john.smith@email.com</em></td></tr><tr><td><strong>Date of Birth</strong></td><td><span class="label-badge lb-red">Required</span></td><td>Format: dd/mm/yyyy</td><td><em>15/06/1985</em></td></tr><tr><td><strong>Rent Payment Type</strong></td><td><span class="label-badge lb-red">Required</span></td><td>Universal Credit or Working</td><td><em>Working</em></td></tr><tr><td><strong>Payment Day of Month</strong></td><td><span class="label-badge lb-red">Required</span></td><td>Day of month rent is due (1–31)</td><td><em>28</em></td></tr></tbody>
+    </table>
+  </div>
+</div>
+<div class="section" id="workflow">
+  <h2 class="section-title"><span class="icon">&#x1F504;</span> 4. Step-by-Step Workflow</h2>
+  <div class="card">
+    <div class="card-header">&#x1F5FA; Process Flow</div>
+    <div class="flow"><div class="flow-step primary"><span class="flow-icon">📥</span>Collect 6 Fields<div class="flow-sub">all required</div></div><div class="flow-arrow">→</div><div class="flow-step primary"><span class="flow-icon">🗺️</span>Map to Airtable<div class="flow-sub">field IDs + defaults</div></div><div class="flow-arrow">→</div><div class="flow-step primary"><span class="flow-icon">⚙️</span>create_record<div class="flow-sub">Tenants table</div></div><div class="flow-arrow">→</div><div class="flow-step success"><span class="flow-icon">✅</span>Return Record ID<div class="flow-sub">for tenancy creation</div></div></div>
+  </div>
+  <div class="wf-card"><div class="wf-header"><div class="wf-num">1</div><h3>Collect and Map Fields</h3><span class="wf-tag">manual</span></div><div class="wf-body"><ol class="steps"><li>Gather all six required fields from Kevin.</li><li>Map to Airtable: Tenant Status → Active (always), Rent Payment Type → provided value, Due Date of the Month → Payment Day of Month.</li><li>Do NOT populate: Tenant Surname, Tenancies, Notes, Tasks, Account Statement, or Record ID fields.</li></ol></div></div><div class="wf-card"><div class="wf-header"><div class="wf-num">2</div><h3>Create Tenant Record</h3><span class="wf-tag">automated</span></div><div class="wf-body"><ol class="steps"><li>Call create_record on the Tenants table (tblX4elTuu01gwBYh) in base appnqjDpqDniH3IRl.</li><li>Save the returned Record ID — it is required for the tenancy creation step.</li><li>Confirm the created record details to Kevin.</li></ol></div></div>
+</div>
+<div class="section" id="tools">
+  <h2 class="section-title"><span class="icon">&#x1F527;</span> 5. Tools &amp; Integrations</h2>
+  <div class="card">
+    <table class="label-table">
+      <thead><tr><th>Tool</th><th>Purpose</th><th>Access</th></tr></thead>
+      <tbody><tr><td><strong>Airtable</strong></td><td>Creates the tenant record in the Tenants table</td><td><span class="label-badge lb-blue">Connected</span></td></tr></tbody>
+    </table>
+  </div>
+</div>
+<div class="section" id="approval">
+  <h2 class="section-title"><span class="icon">&#x2705;</span> 6. Approval Gates</h2>
+  <div class="card"><p>No approval gate. Record is created immediately after all six fields are collected.</p></div>
+</div>
+<div class="section" id="outputs">
+  <h2 class="section-title"><span class="icon">&#x1F4E4;</span> 7. Outputs &amp; Confirmations</h2>
+  <div class="card">
+    <table class="label-table">
+      <thead><tr><th>Output</th><th>Where</th><th>Notes</th></tr></thead>
+      <tbody><tr><td><strong>Tenant record</strong></td><td>Airtable — Tenants table</td><td>Status set to Active. Record ID returned for use in tenancy creation.</td></tr></tbody>
+    </table>
+  </div>
+</div>
+<div class="section" id="errors">
+  <h2 class="section-title"><span class="icon">&#x1F6A8;</span> 8. Error Handling</h2>
+  <div class="card"><ul><li><strong>Missing mandatory field:</strong> Ask specifically for the missing field before attempting to create the record.</li><li><strong>Permission error from Airtable:</strong> Verify baseId (appnqjDpqDniH3IRl) and tableId (tblX4elTuu01gwBYh) using list_bases and list_tables.</li></ul></div>
+</div>
+<div class="section" id="troubleshooting">
+  <h2 class="section-title"><span class="icon">&#x1F6E0;&#xFE0F;</span> 9. Troubleshooting</h2>
+  <div class="card"><div class="ts-item"><div class="ts-problem">❌ Rent Payment Type field not in Airtable</div><div class="ts-solution">✅ The field needs to be added to the Tenants table in Airtable before this skill can populate it. Inform Kevin.</div></div><div class="ts-item"><div class="ts-problem">❌ Duplicate tenant suspected</div><div class="ts-solution">✅ Search the Tenants table by name before creating to avoid duplicates.</div></div></div>
+</div>
+<div class="section" id="changelog">
+  <h2 class="section-title"><span class="icon">&#x1F4DD;</span> 10. Changelog</h2>
+  <div class="card">
+    <table class="label-table">
+      <thead><tr><th>Version</th><th>Date</th><th>Changes</th></tr></thead>
+      <tbody><tr><td><span class="label-badge lb-blue">1.0</span></td><td>09 Apr 2025</td><td>Initial release</td></tr></tbody>
+    </table>
+  </div>
+</div>
+</div>
+</body>
+</html>

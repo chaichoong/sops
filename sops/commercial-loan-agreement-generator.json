@@ -1,0 +1,10 @@
+{
+  "id": "commercial-loan-agreement-generator",
+  "title": "Commercial Loan Agreement Generator",
+  "desc": "Generate a commercial loan agreement PDF from variable inputs, with auto-calculated repayment schedule and first payment date.",
+  "category": "finance",
+  "icon": "&#x1F4DC;",
+  "version": "1.0",
+  "updated": "2025-04-09",
+  "file": "sops/commercial-loan-agreement-generator.html"
+}

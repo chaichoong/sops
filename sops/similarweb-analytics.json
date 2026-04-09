@@ -1,0 +1,10 @@
+{
+  "id": "similarweb-analytics",
+  "title": "SimilarWeb Analytics",
+  "desc": "Retrieve traffic, engagement, ranking, traffic sources, and geographic data for any domain using the SimilarWeb API.",
+  "category": "ops",
+  "icon": "&#x1F4C8;",
+  "version": "1.0",
+  "updated": "2025-04-09",
+  "file": "sops/similarweb-analytics.html"
+}

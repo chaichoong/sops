@@ -1,0 +1,10 @@
+{
+  "id": "cash-flow-forecast",
+  "title": "Cash Flow Forecast",
+  "desc": "Generate a 30-day rolling cash flow forecast combining Santander and TNT Mgt Zempler accounts from live Airtable data.",
+  "category": "finance",
+  "icon": "&#x1F4CA;",
+  "version": "1.0",
+  "updated": "2025-04-09",
+  "file": "sops/cash-flow-forecast.html"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "video-generator",
+  "title": "Video Generator",
+  "desc": "Professional five-phase AI video production workflow from brief to finished clips, covering reference images, keyframes, video, and audio mixing.",
+  "category": "content",
+  "icon": "&#x1F3AC;",
+  "version": "1.0",
+  "updated": "2025-04-09",
+  "file": "sops/video-generator.html"
+}

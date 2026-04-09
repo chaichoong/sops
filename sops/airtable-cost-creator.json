@@ -1,0 +1,10 @@
+{
+  "id": "airtable-cost-creator",
+  "title": "Airtable Cost Creator",
+  "desc": "Add new fixed cost records to the Operations Director Airtable base with correct linked fields and automatic payment status.",
+  "category": "finance",
+  "icon": "&#x1F4B3;",
+  "version": "1.0",
+  "updated": "2025-04-09",
+  "file": "sops/airtable-cost-creator.html"
+}

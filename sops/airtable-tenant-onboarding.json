@@ -1,0 +1,10 @@
+{
+  "id": "airtable-tenant-onboarding",
+  "title": "Airtable Tenant Onboarding",
+  "desc": "End-to-end three-phase workflow to create a tenant record, create the linked tenancy, and update the rental unit to Occupied.",
+  "category": "tenant",
+  "icon": "&#x1F3E1;",
+  "version": "1.0",
+  "updated": "2025-04-09",
+  "file": "sops/airtable-tenant-onboarding.html"
+}

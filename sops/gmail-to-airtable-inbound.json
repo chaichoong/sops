@@ -1,0 +1,10 @@
+{
+  "id": "gmail-to-airtable-inbound",
+  "title": "Gmail to Airtable Inbound",
+  "desc": "Sync emails labelled To Respond in kevin@runpreneur.org.uk to Airtable as deduplicated Inbound Comms task records.",
+  "category": "comms",
+  "icon": "&#x1F4E8;",
+  "version": "1.0",
+  "updated": "2025-04-09",
+  "file": "sops/gmail-to-airtable-inbound.html"
+}

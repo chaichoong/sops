@@ -1,0 +1,10 @@
+{
+  "id": "airtable-tenancy-creator",
+  "title": "Airtable Tenancy Creator",
+  "desc": "Create a new tenancy record linked to an existing tenant, with auto-calculated rent due date and inherited payment defaults.",
+  "category": "property",
+  "icon": "&#x1F3E0;",
+  "version": "1.0",
+  "updated": "2025-04-09",
+  "file": "sops/airtable-tenancy-creator.html"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "tenant-doc-generator",
+  "title": "Tenant Document Generator",
+  "desc": "Generate an AST agreement and Proof of Residency letter from four tenant inputs, converted to PDF ready for e-signing.",
+  "category": "tenant",
+  "icon": "&#x1F4C4;",
+  "version": "1.0",
+  "updated": "2025-04-09",
+  "file": "sops/tenant-doc-generator.html"
+}

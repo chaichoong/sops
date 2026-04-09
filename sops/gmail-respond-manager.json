@@ -1,0 +1,10 @@
+{
+  "id": "gmail-respond-manager",
+  "title": "Gmail Respond Manager",
+  "desc": "Fetch To Respond emails, draft replies using the knowledge base, batch-present for approval, create Gmail drafts, and manage label transitions.",
+  "category": "comms",
+  "icon": "&#x1F4E7;",
+  "version": "1.0",
+  "updated": "2025-04-09",
+  "file": "sops/gmail-respond-manager.html"
+}

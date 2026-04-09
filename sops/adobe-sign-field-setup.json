@@ -1,0 +1,10 @@
+{
+  "id": "adobe-sign-field-setup",
+  "title": "Adobe Sign Field Setup",
+  "desc": "Guides the full Adobe Sign e-signature workflow including recipient setup, field reassignment, and workarounds for the Chrome extension viewport conflict.",
+  "category": "ops",
+  "icon": "&#x270D;&#xFE0F;",
+  "version": "1.0",
+  "updated": "2025-04-09",
+  "file": "sops/adobe-sign-field-setup.html"
+}

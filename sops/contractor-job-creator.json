@@ -1,0 +1,10 @@
+{
+  "id": "contractor-job-creator",
+  "title": "Contractor Job Creator",
+  "desc": "Log contractor maintenance jobs to Airtable with the Maintenance Ticket ticked and notify the assigned contractor via Slack.",
+  "category": "property",
+  "icon": "&#x1F527;",
+  "version": "1.0",
+  "updated": "2025-04-09",
+  "file": "sops/contractor-job-creator.html"
+}

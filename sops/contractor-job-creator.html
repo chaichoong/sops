@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contractor Job Creator &mdash; Standard Operating Procedure</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.6; color: #1e293b; background: #f1f5f9;
+}
+:root {
+  --blue-50:#eff6ff;--blue-100:#dbeafe;--blue-200:#bfdbfe;--blue-500:#3b82f6;--blue-600:#2563eb;--blue-700:#1d4ed8;--blue-800:#1e40af;--blue-900:#1e3a5f;
+  --indigo-50:#eef2ff;--indigo-100:#e0e7ff;--indigo-500:#6366f1;--indigo-600:#4f46e5;--indigo-700:#4338ca;
+  --green-50:#f0fdf4;--green-100:#dcfce7;--green-500:#22c55e;--green-600:#16a34a;--green-700:#15803d;
+  --amber-50:#fffbeb;--amber-100:#fef3c7;--amber-500:#f59e0b;--amber-600:#d97706;
+  --red-50:#fef2f2;--red-100:#fee2e2;--red-500:#ef4444;--red-600:#dc2626;
+  --purple-50:#faf5ff;--purple-500:#a855f7;--purple-600:#9333ea;
+  --slate-50:#f8fafc;--slate-100:#f1f5f9;--slate-200:#e2e8f0;--slate-300:#cbd5e1;--slate-400:#94a3b8;--slate-500:#64748b;--slate-600:#475569;--slate-700:#334155;--slate-800:#1e293b;
+  --shadow:0 1px 3px rgba(0,0,0,0.1),0 1px 2px rgba(0,0,0,0.06);--shadow-md:0 4px 6px -1px rgba(0,0,0,0.1),0 2px 4px -1px rgba(0,0,0,0.06);--shadow-lg:0 10px 15px -3px rgba(0,0,0,0.1),0 4px 6px -2px rgba(0,0,0,0.05);
+  --radius:12px;--radius-sm:8px;
+}
+.header { background: linear-gradient(135deg, var(--blue-800) 0%, var(--indigo-700) 100%); color: white; padding: 2.5rem 2rem 2rem; position: relative; overflow: hidden; }
+.header::after { content:''; position:absolute; top:-50%; right:-10%; width:500px; height:500px; background:radial-gradient(circle,rgba(255,255,255,0.08) 0%,transparent 70%); border-radius:50%; }
+.header-inner { max-width:1100px; margin:0 auto; position:relative; z-index:1; }
+.header-back { display:inline-flex; align-items:center; gap:0.4rem; font-size:0.82rem; opacity:0.7; text-decoration:none; color:white; margin-bottom:1rem; transition:opacity 0.15s; }
+.header-back:hover { opacity:1; }
+.header h1 { font-size:2.2rem; font-weight:700; margin-bottom:0.3rem; letter-spacing:-0.5px; }
+.header .subtitle { font-size:1.05rem; opacity:0.85; }
+.header .version { font-size:0.85rem; opacity:0.6; margin-top:0.5rem; }
+.container { max-width:1100px; margin:0 auto; padding:0 1.5rem 4rem; }
+.section { margin-top:2.5rem; }
+.section-title { font-size:1.5rem; font-weight:700; color:var(--blue-800); padding-bottom:0.5rem; border-bottom:3px solid var(--blue-200); margin-bottom:1.25rem; display:flex; align-items:center; gap:0.5rem; }
+.section-title .icon { font-size:1.4rem; }
+.card { background:white; border-radius:var(--radius); box-shadow:var(--shadow); padding:1.5rem; margin-bottom:1.25rem; border:1px solid var(--slate-200); }
+.card-header { font-size:1.1rem; font-weight:600; color:var(--slate-800); margin-bottom:0.75rem; display:flex; align-items:center; gap:0.5rem; }
+.quick-ref { background:linear-gradient(135deg,var(--blue-50) 0%,var(--indigo-50) 100%); border:2px solid var(--blue-200); border-radius:var(--radius); padding:1.5rem; margin-top:-1rem; position:relative; z-index:2; box-shadow:var(--shadow-lg); }
+.quick-ref h2 { font-size:1.2rem; color:var(--blue-800); margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem; }
+.qr-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:0.75rem; }
+.qr-item { background:white; border-radius:var(--radius-sm); padding:0.75rem 1rem; border-left:4px solid var(--blue-500); font-size:0.88rem; }
+.qr-item .qr-label { font-weight:600; color:var(--slate-600); font-size:0.75rem; text-transform:uppercase; letter-spacing:0.5px; }
+.qr-item .qr-value { color:var(--slate-800); margin-top:0.15rem; word-break:break-all; }
+.toc { background:white; border-radius:var(--radius); box-shadow:var(--shadow); padding:1.5rem; border:1px solid var(--slate-200); }
+.toc h2 { font-size:1.15rem; color:var(--blue-800); margin-bottom:1rem; }
+.toc-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:0.35rem 1.5rem; }
+.toc a { display:flex; align-items:center; gap:0.5rem; color:var(--slate-700); text-decoration:none; padding:0.35rem 0.5rem; border-radius:6px; font-size:0.9rem; transition:background 0.15s; }
+.toc a:hover { background:var(--blue-50); color:var(--blue-700); }
+.toc a .toc-num { display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:50%; background:var(--blue-100); color:var(--blue-700); font-size:0.7rem; font-weight:700; flex-shrink:0; }
+.flow { display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:0; padding:1.5rem 0; }
+.flow-step { background:white; border:2px solid var(--blue-200); border-radius:var(--radius-sm); padding:0.75rem 1.1rem; text-align:center; font-size:0.85rem; font-weight:600; color:var(--slate-700); min-width:110px; }
+.flow-step.primary { background:var(--blue-600); color:white; border-color:var(--blue-700); }
+.flow-step.success { background:var(--green-600); color:white; border-color:var(--green-700); }
+.flow-step.warning { background:var(--amber-500); color:white; border-color:var(--amber-600); }
+.flow-step.purple { background:var(--purple-600); color:white; border-color:var(--purple-600); }
+.flow-step .flow-icon { font-size:1.3rem; display:block; margin-bottom:0.25rem; }
+.flow-step .flow-sub { font-weight:400; font-size:0.75rem; opacity:0.85; margin-top:0.15rem; }
+.flow-arrow { font-size:1.4rem; color:var(--slate-400); padding:0 0.3rem; flex-shrink:0; }
+.label-table { width:100%; border-collapse:separate; border-spacing:0; font-size:0.88rem; }
+.label-table th { background:var(--blue-700); color:white; padding:0.75rem 1rem; text-align:left; font-weight:600; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.5px; }
+.label-table th:first-child { border-radius:var(--radius-sm) 0 0 0; }
+.label-table th:last-child { border-radius:0 var(--radius-sm) 0 0; }
+.label-table td { padding:0.65rem 1rem; border-bottom:1px solid var(--slate-200); vertical-align:top; }
+.label-table tr:last-child td { border-bottom:none; }
+.label-table tr:nth-child(even) td { background:var(--slate-50); }
+.label-table tr:hover td { background:var(--blue-50); }
+.label-badge { display:inline-block; padding:0.2rem 0.6rem; border-radius:999px; font-weight:600; font-size:0.78rem; white-space:nowrap; }
+.lb-blue { background:#dbeafe; color:#1d4ed8; } .lb-amber { background:#fef3c7; color:#92400e; }
+.lb-red { background:#fee2e2; color:#991b1b; } .lb-green { background:#dcfce7; color:#166534; }
+.lb-purple { background:#e0e7ff; color:#3730a3; }
+.wf-card { background:white; border-radius:var(--radius); box-shadow:var(--shadow); border:1px solid var(--slate-200); overflow:hidden; margin-bottom:1.5rem; }
+.wf-header { padding:1rem 1.5rem; display:flex; align-items:center; gap:0.75rem; border-bottom:1px solid var(--slate-200); }
+.wf-num { display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:50%; font-weight:700; font-size:1rem; flex-shrink:0; color:white; background:var(--blue-600); }
+.wf-header h3 { font-size:1.1rem; font-weight:700; color:var(--slate-800); }
+.wf-header .wf-tag { font-size:0.75rem; padding:0.15rem 0.5rem; border-radius:999px; background:var(--slate-100); color:var(--slate-600); font-weight:500; }
+.wf-body { padding:1.25rem 1.5rem; }
+.steps { counter-reset:step; list-style:none; padding:0; }
+.steps li { position:relative; padding:0.5rem 0 0.5rem 2.5rem; font-size:0.9rem; line-height:1.5; }
+.steps li::before { counter-increment:step; content:counter(step); position:absolute; left:0; top:0.45rem; width:24px; height:24px; border-radius:50%; background:var(--blue-100); color:var(--blue-700); font-size:0.75rem; font-weight:700; display:flex; align-items:center; justify-content:center; }
+.steps li + li { border-top:1px solid var(--slate-100); }
+.info-box { padding:0.85rem 1rem; border-radius:var(--radius-sm); font-size:0.88rem; margin:0.75rem 0; display:flex; align-items:flex-start; gap:0.6rem; }
+.info-box.info { background:var(--blue-50); border-left:4px solid var(--blue-500); color:var(--blue-800); }
+.info-box.warn { background:var(--amber-50); border-left:4px solid var(--amber-500); color:#92400e; }
+.info-box.danger { background:var(--red-50); border-left:4px solid var(--red-500); color:#991b1b; }
+.info-box.tip { background:var(--green-50); border-left:4px solid var(--green-500); color:var(--green-700); }
+.info-box .ib-icon { font-size:1.1rem; flex-shrink:0; margin-top:0.05rem; }
+code { background:var(--slate-100); padding:0.15rem 0.4rem; border-radius:4px; font-size:0.82rem; font-family:'SF Mono',Monaco,Consolas,monospace; color:var(--indigo-600); }
+.ts-item { margin-bottom:0.75rem; }
+.ts-problem { font-weight:600; color:var(--red-600); font-size:0.9rem; }
+.ts-solution { font-size:0.88rem; color:var(--slate-700); margin-top:0.2rem; padding-left:1rem; }
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+strong { color:var(--slate-800); } a { color:var(--blue-600); }
+p { margin-bottom:0.5rem; } ul,ol { margin-left:1.25rem; margin-bottom:0.5rem; }
+li { margin-bottom:0.2rem; font-size:0.9rem; } hr { border:none; border-top:1px solid var(--slate-200); margin:1.5rem 0; }
+@media (max-width:768px) {
+  .header h1 { font-size:1.6rem; } .qr-grid { grid-template-columns:1fr; }
+  .toc-grid { grid-template-columns:1fr; } .grid-2 { grid-template-columns:1fr; }
+  .flow { flex-direction:column; } .flow-arrow { transform:rotate(90deg); }
+  .container { padding:0 1rem 3rem; }
+}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="header-back">&#x2190; Back to SOP Index</a>
+    <h1>🔧 Contractor Job Creator</h1>
+    <div class="subtitle">Standard Operating Procedure &mdash; Log maintenance jobs to Airtable and notify the contractor via Slack</div>
+    <div class="version">Version 1.0 &bull; 09 Apr 2025 &bull; Owner: Kevin Brittain</div>
+  </div>
+</div>
+<div class="container">
+<div class="quick-ref">
+  <h2>&#x26A1; Quick Reference</h2>
+  <div class="qr-grid">
+    <div class="qr-item"><div class="qr-label">Trigger Phrase</div><div class="qr-value">"Add a job" / "New contractor job"</div></div>
+    <div class="qr-item"><div class="qr-label">Skill File</div><div class="qr-value"><code>/mnt/skills/user/contractor-job-creator/SKILL.md</code></div></div>
+    <div class="qr-item"><div class="qr-label">Primary Tool(s)</div><div class="qr-value">Airtable, Slack</div></div>
+    <div class="qr-item"><div class="qr-label">Airtable Base</div><div class="qr-value">Operations Director (appnqjDpqDniH3IRl)</div></div>
+    <div class="qr-item"><div class="qr-label">Approval Required</div><div class="qr-value">Yes</div></div>
+    <div class="qr-item"><div class="qr-label">Slack Channel</div><div class="qr-value">#property-management (C09EMKREPJL)</div></div>
+    <div class="qr-item"><div class="qr-label">Category</div><div class="qr-value">property</div></div>
+    <div class="qr-item"><div class="qr-label">Estimated Duration</div><div class="qr-value">3–4 minutes (includes 30s automation wait)</div></div>
+  </div>
+</div>
+<div class="section">
+  <div class="toc">
+    <h2>&#x1F4D1; Contents</h2>
+    <div class="toc-grid">
+      <a href="#purpose"><span class="toc-num">1</span> Purpose &amp; Scope</a>
+      <a href="#trigger"><span class="toc-num">2</span> When to Use This Skill</a>
+      <a href="#inputs"><span class="toc-num">3</span> Required Inputs</a>
+      <a href="#workflow"><span class="toc-num">4</span> Step-by-Step Workflow</a>
+      <a href="#tools"><span class="toc-num">5</span> Tools &amp; Integrations</a>
+      <a href="#approval"><span class="toc-num">6</span> Approval Gates</a>
+      <a href="#outputs"><span class="toc-num">7</span> Outputs &amp; Confirmations</a>
+      <a href="#errors"><span class="toc-num">8</span> Error Handling</a>
+      <a href="#troubleshooting"><span class="toc-num">9</span> Troubleshooting</a>
+      <a href="#changelog"><span class="toc-num">10</span> Changelog</a>
+    </div>
+  </div>
+</div>
+<div class="section" id="purpose">
+  <h2 class="section-title"><span class="icon">&#x1F3AF;</span> 1. Purpose &amp; Scope</h2>
+  <div class="card">
+    <p>Adds contractor maintenance jobs to the Tasks table with the Maintenance Ticket checkbox ticked. Generates a concise task name, determines priority (High or Low) from the job description, looks up the property record, and notifies the contractor via Slack. Kevin confirms the summary before the job is created.</p>
+    <div class="info-box info"><span class="ib-icon">&#x2139;&#xFE0F;</span><div><strong>Scope:</strong> In scope: new maintenance jobs for Gary Marsh, Roy Lavin, or Rob Jackson. Out of scope: general non-maintenance tasks (use airtable-task-creator), marking jobs complete (update Status to Completed).</div></div>
+  </div>
+</div>
+<div class="section" id="trigger">
+  <h2 class="section-title"><span class="icon">&#x1F4A1;</span> 2. When to Use This Skill</h2>
+  <div class="card">
+    <div class="card-header">&#x1F4AC; Trigger Phrases</div>
+    <p>Use this skill when Kevin or the team says any of the following:</p>
+    <ul><li>"Add a job" / "New contractor job" / "Log a maintenance job"</li><li>"Add to the job list"</li><li>Kevin describes work that needs doing at a property</li><li>Kevin mentions a contractor task or repair</li></ul>
+    <div class="info-box warn"><span class="ib-icon">&#x26A0;&#xFE0F;</span><div><strong>Do not use this skill when:</strong> General admin or team tasks — use airtable-task-creator. Contractor job updates (e.g. marking complete) — search the task and update Status to Completed directly.</div></div>
+  </div>
+</div>
+<div class="section" id="inputs">
+  <h2 class="section-title"><span class="icon">&#x1F4E5;</span> 3. Required Inputs</h2>
+  <div class="card">
+    <table class="label-table">
+      <thead><tr><th>Input</th><th>Required</th><th>Description</th><th>Example</th></tr></thead>
+      <tbody><tr><td><strong>Job description</strong></td><td><span class="label-badge lb-red">Required</span></td><td>Kevin's natural description of the work needed</td><td><em>The boiler at 55 Elmdon has stopped working — no hot water or heating</em></td></tr><tr><td><strong>Property</strong></td><td><span class="label-badge lb-red">Required</span></td><td>Which property the job relates to (shorthand accepted)</td><td><em>55 Elmdon / Woodcock Close / Newton Street</em></td></tr><tr><td><strong>Contractor</strong></td><td><span class="label-badge lb-red">Required</span></td><td>Which contractor: Gary Marsh, Roy Lavin, or Rob Jackson</td><td><em>Gary Marsh</em></td></tr><tr><td><strong>Attachments</strong></td><td><span class="label-badge lb-amber">Optional</span></td><td>Photos or videos of the issue</td><td><em>photo.jpg</em></td></tr></tbody>
+    </table>
+  </div>
+</div>
+<div class="section" id="workflow">
+  <h2 class="section-title"><span class="icon">&#x1F504;</span> 4. Step-by-Step Workflow</h2>
+  <div class="card">
+    <div class="card-header">&#x1F5FA; Process Flow</div>
+    <div class="flow"><div class="flow-step primary"><span class="flow-icon">📥</span>Collect Info<div class="flow-sub">description + property + contractor</div></div><div class="flow-arrow">→</div><div class="flow-step primary"><span class="flow-icon">🤖</span>AI Processing<div class="flow-sub">name + priority + property lookup</div></div><div class="flow-arrow">→</div><div class="flow-step warning"><span class="flow-icon">👀</span>Confirm<div class="flow-sub">Kevin approves summary</div></div><div class="flow-arrow">→</div><div class="flow-step primary"><span class="flow-icon">⚙️</span>Phase 1 Create<div class="flow-sub">description & assignee</div></div><div class="flow-arrow">→</div><div class="flow-step primary"><span class="flow-icon">⏳</span>Wait 30s<div class="flow-sub">automation runs</div></div><div class="flow-arrow">→</div><div class="flow-step primary"><span class="flow-icon">🔄</span>Phase 2 Update<div class="flow-sub">all maintenance fields</div></div><div class="flow-arrow">→</div><div class="flow-step success"><span class="flow-icon">💬</span>Slack Notify<div class="flow-sub">#property-management</div></div></div>
+  </div>
+  <div class="wf-card"><div class="wf-header"><div class="wf-num">1</div><h3>AI Processing</h3><span class="wf-tag">automated</span></div><div class="wf-body"><ol class="steps"><li>Generate Task Name: shorten Kevin's description to a clear, mobile-readable name (e.g. 'Fix boiler - no hot water/heating').</li><li>Determine Priority: High = health/safety risks, no heating/hot water, water leaks, structural, security, electrical, gas, fire, flooding, sewage. Low = cosmetic, non-urgent, wear and tear, garden, minor fixtures.</li><li>Look up Property: search Properties table (tbl6f0OkAmTC2jbuG) using keywords. Reference references/properties.md for quick matching.</li></ol></div></div><div class="wf-card"><div class="wf-header"><div class="wf-num">2</div><h3>Confirm with Kevin</h3><span class="wf-tag">approval gate</span></div><div class="wf-body"><ol class="steps"><li>Present summary: Task Name, Property (matched address), Contractor, Priority (with brief reasoning), Attachments.</li><li>Wait for Kevin's approval or amendments before creating.</li></ol></div></div><div class="wf-card"><div class="wf-header"><div class="wf-num">3</div><h3>Phase 1 — Create Task Record</h3><span class="wf-tag">automated</span></div><div class="wf-body"><ol class="steps"><li>Create with only: Task Name, Assignee (Kevin), Description, and Attachments (if any).</li><li>Save returned Record ID for Phase 2.</li></ol></div></div><div class="wf-card"><div class="wf-header"><div class="wf-num">4</div><h3>Phase 2 — Update After 30s</h3><span class="wf-tag">automated</span></div><div class="wf-body"><ol class="steps"><li>Update: Maintenance Ticket → true, Status → Upcoming, Priority level → High/Low Priority, Contractor → contractor name, Properties → [property record ID].</li><li>CRITICAL: Set Due Date → null and Time Estimate → null to clear automation defaults.</li></ol></div></div><div class="wf-card"><div class="wf-header"><div class="wf-num">5</div><h3>Slack Notification</h3><span class="wf-tag">automated</span></div><div class="wf-body"><ol class="steps"><li>Post to #property-management (C09EMKREPJL) tagging the contractor by Slack user ID.</li><li>Format: 🔧 New job added to your list, @contractor | Task name | Property | Priority | Brief description | Link to job list.</li></ol></div></div>
+</div>
+<div class="section" id="tools">
+  <h2 class="section-title"><span class="icon">&#x1F527;</span> 5. Tools &amp; Integrations</h2>
+  <div class="card">
+    <table class="label-table">
+      <thead><tr><th>Tool</th><th>Purpose</th><th>Access</th></tr></thead>
+      <tbody><tr><td><strong>Airtable</strong></td><td>Creates and updates task record in Tasks table with Maintenance Ticket ticked</td><td><span class="label-badge lb-blue">Connected</span></td></tr><tr><td><strong>Slack</strong></td><td>Posts to #property-management tagging the contractor</td><td><span class="label-badge lb-blue">Connected</span></td></tr></tbody>
+    </table>
+  </div>
+</div>
+<div class="section" id="approval">
+  <h2 class="section-title"><span class="icon">&#x2705;</span> 6. Approval Gates</h2>
+  <div class="card"><div class="info-box warn"><span class="ib-icon">⚠️</span><div><strong>Approval Gate:</strong> Kevin must confirm the summary (task name, property, contractor, priority) before the Airtable record is created or any Slack message is sent.</div></div></div>
+</div>
+<div class="section" id="outputs">
+  <h2 class="section-title"><span class="icon">&#x1F4E4;</span> 7. Outputs &amp; Confirmations</h2>
+  <div class="card">
+    <table class="label-table">
+      <thead><tr><th>Output</th><th>Where</th><th>Notes</th></tr></thead>
+      <tbody><tr><td><strong>Maintenance task record</strong></td><td>Airtable — Tasks table</td><td>Maintenance Ticket ticked, Status: Upcoming, no due date</td></tr><tr><td><strong>Slack notification</strong></td><td>#property-management</td><td>Contractor tagged with job details and link to job list</td></tr></tbody>
+    </table>
+  </div>
+</div>
+<div class="section" id="errors">
+  <h2 class="section-title"><span class="icon">&#x1F6A8;</span> 8. Error Handling</h2>
+  <div class="card"><ul><li><strong>Property not found in search:</strong> Try alternative keywords (street name, area). Reference references/properties.md. Ask Kevin to clarify if still not found.</li><li><strong>Phase 2 update fails:</strong> Report the Record ID so Kevin can update manually. The Phase 1 record is already created.</li><li><strong>Slack message fails:</strong> Report the failure. Kevin can message the contractor directly.</li></ul></div>
+</div>
+<div class="section" id="troubleshooting">
+  <h2 class="section-title"><span class="icon">&#x1F6E0;&#xFE0F;</span> 9. Troubleshooting</h2>
+  <div class="card"><div class="ts-item"><div class="ts-problem">❌ Task has a due date after Phase 2</div><div class="ts-solution">✅ Due Date must be set to null in Phase 2. Check that the update included 'Due Date': null.</div></div><div class="ts-item"><div class="ts-problem">❌ Wrong contractor tagged in Slack</div><div class="ts-solution">✅ Verify Slack user IDs: Gary Marsh → U0A9XD12YPN, Roy Lavin → U0AAN4CTVQQ, Rob Jackson → U0A9MDFKA59.</div></div></div>
+</div>
+<div class="section" id="changelog">
+  <h2 class="section-title"><span class="icon">&#x1F4DD;</span> 10. Changelog</h2>
+  <div class="card">
+    <table class="label-table">
+      <thead><tr><th>Version</th><th>Date</th><th>Changes</th></tr></thead>
+      <tbody><tr><td><span class="label-badge lb-blue">1.0</span></td><td>09 Apr 2025</td><td>Initial release</td></tr></tbody>
+    </table>
+  </div>
+</div>
+</div>
+</body>
+</html>

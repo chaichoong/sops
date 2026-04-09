@@ -1,0 +1,10 @@
+{
+  "id": "evernote-pdf-processor",
+  "title": "Evernote PDF Processor",
+  "desc": "Split multi-document PDFs from Evernote into separate files and create individual Inbound Comms task records in Airtable.",
+  "category": "comms",
+  "icon": "&#x1F4CE;",
+  "version": "1.0",
+  "updated": "2025-04-09",
+  "file": "sops/evernote-pdf-processor.html"
+}

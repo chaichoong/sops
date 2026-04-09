@@ -1,0 +1,10 @@
+{
+  "id": "airtable-tenant-creator",
+  "title": "Airtable Tenant Creator",
+  "desc": "Add a new tenant record to the Tenants table in the Operations Director Airtable base with correct field mappings and Active status.",
+  "category": "tenant",
+  "icon": "&#x1F464;",
+  "version": "1.0",
+  "updated": "2025-04-09",
+  "file": "sops/airtable-tenant-creator.html"
+}

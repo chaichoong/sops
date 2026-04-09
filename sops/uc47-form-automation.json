@@ -1,0 +1,10 @@
+{
+  "id": "uc47-form-automation",
+  "title": "UC47 Form Automation",
+  "desc": "Complete the UC47 DWP online form for Universal Credit tenants using Airtable data, handling email verification and requiring Kevin's approval before submission.",
+  "category": "tenant",
+  "icon": "&#x1F3DB;&#xFE0F;",
+  "version": "1.0",
+  "updated": "2025-04-09",
+  "file": "sops/uc47-form-automation.html"
+}

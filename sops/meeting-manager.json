@@ -1,0 +1,10 @@
+{
+  "id": "meeting-manager",
+  "title": "Meeting Manager",
+  "desc": "Reschedule or create meetings in Google Calendar and notify all attendees via Slack DM or email fallback.",
+  "category": "ops",
+  "icon": "&#x1F4C5;",
+  "version": "1.0",
+  "updated": "2025-04-09",
+  "file": "sops/meeting-manager.html"
+}
