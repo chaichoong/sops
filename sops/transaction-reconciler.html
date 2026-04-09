@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transaction Reconciler &mdash; Standard Operating Procedure</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.6; color: #1e293b; background: #f1f5f9;
+}
+:root {
+  --blue-50:#eff6ff;--blue-100:#dbeafe;--blue-200:#bfdbfe;--blue-500:#3b82f6;--blue-600:#2563eb;--blue-700:#1d4ed8;--blue-800:#1e40af;--blue-900:#1e3a5f;
+  --indigo-50:#eef2ff;--indigo-100:#e0e7ff;--indigo-500:#6366f1;--indigo-600:#4f46e5;--indigo-700:#4338ca;
+  --green-50:#f0fdf4;--green-100:#dcfce7;--green-500:#22c55e;--green-600:#16a34a;--green-700:#15803d;
+  --amber-50:#fffbeb;--amber-100:#fef3c7;--amber-500:#f59e0b;--amber-600:#d97706;
+  --red-50:#fef2f2;--red-100:#fee2e2;--red-500:#ef4444;--red-600:#dc2626;
+  --purple-50:#faf5ff;--purple-500:#a855f7;--purple-600:#9333ea;
+  --slate-50:#f8fafc;--slate-100:#f1f5f9;--slate-200:#e2e8f0;--slate-300:#cbd5e1;--slate-400:#94a3b8;--slate-500:#64748b;--slate-600:#475569;--slate-700:#334155;--slate-800:#1e293b;
+  --shadow:0 1px 3px rgba(0,0,0,0.1),0 1px 2px rgba(0,0,0,0.06);--shadow-md:0 4px 6px -1px rgba(0,0,0,0.1),0 2px 4px -1px rgba(0,0,0,0.06);--shadow-lg:0 10px 15px -3px rgba(0,0,0,0.1),0 4px 6px -2px rgba(0,0,0,0.05);
+  --radius:12px;--radius-sm:8px;
+}
+.header { background: linear-gradient(135deg, var(--blue-800) 0%, var(--indigo-700) 100%); color: white; padding: 2.5rem 2rem 2rem; position: relative; overflow: hidden; }
+.header::after { content:''; position:absolute; top:-50%; right:-10%; width:500px; height:500px; background:radial-gradient(circle,rgba(255,255,255,0.08) 0%,transparent 70%); border-radius:50%; }
+.header-inner { max-width:1100px; margin:0 auto; position:relative; z-index:1; }
+.header-back { display:inline-flex; align-items:center; gap:0.4rem; font-size:0.82rem; opacity:0.7; text-decoration:none; color:white; margin-bottom:1rem; transition:opacity 0.15s; }
+.header-back:hover { opacity:1; }
+.header h1 { font-size:2.2rem; font-weight:700; margin-bottom:0.3rem; letter-spacing:-0.5px; }
+.header .subtitle { font-size:1.05rem; opacity:0.85; }
+.header .version { font-size:0.85rem; opacity:0.6; margin-top:0.5rem; }
+.container { max-width:1100px; margin:0 auto; padding:0 1.5rem 4rem; }
+.section { margin-top:2.5rem; }
+.section-title { font-size:1.5rem; font-weight:700; color:var(--blue-800); padding-bottom:0.5rem; border-bottom:3px solid var(--blue-200); margin-bottom:1.25rem; display:flex; align-items:center; gap:0.5rem; }
+.section-title .icon { font-size:1.4rem; }
+.card { background:white; border-radius:var(--radius); box-shadow:var(--shadow); padding:1.5rem; margin-bottom:1.25rem; border:1px solid var(--slate-200); }
+.card-header { font-size:1.1rem; font-weight:600; color:var(--slate-800); margin-bottom:0.75rem; display:flex; align-items:center; gap:0.5rem; }
+.quick-ref { background:linear-gradient(135deg,var(--blue-50) 0%,var(--indigo-50) 100%); border:2px solid var(--blue-200); border-radius:var(--radius); padding:1.5rem; margin-top:-1rem; position:relative; z-index:2; box-shadow:var(--shadow-lg); }
+.quick-ref h2 { font-size:1.2rem; color:var(--blue-800); margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem; }
+.qr-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:0.75rem; }
+.qr-item { background:white; border-radius:var(--radius-sm); padding:0.75rem 1rem; border-left:4px solid var(--blue-500); font-size:0.88rem; }
+.qr-item .qr-label { font-weight:600; color:var(--slate-600); font-size:0.75rem; text-transform:uppercase; letter-spacing:0.5px; }
+.qr-item .qr-value { color:var(--slate-800); margin-top:0.15rem; word-break:break-all; }
+.qr-item .qr-value a { color:var(--blue-600); text-decoration:none; }
+.qr-item .qr-value a:hover { text-decoration:underline; }
+.toc { background:white; border-radius:var(--radius); box-shadow:var(--shadow); padding:1.5rem; border:1px solid var(--slate-200); }
+.toc h2 { font-size:1.15rem; color:var(--blue-800); margin-bottom:1rem; }
+.toc-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:0.35rem 1.5rem; }
+.toc a { display:flex; align-items:center; gap:0.5rem; color:var(--slate-700); text-decoration:none; padding:0.35rem 0.5rem; border-radius:6px; font-size:0.9rem; transition:background 0.15s; }
+.toc a:hover { background:var(--blue-50); color:var(--blue-700); }
+.toc a .toc-num { display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:50%; background:var(--blue-100); color:var(--blue-700); font-size:0.7rem; font-weight:700; flex-shrink:0; }
+.flow { display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:0; padding:1.5rem 0; }
+.flow-step { background:white; border:2px solid var(--blue-200); border-radius:var(--radius-sm); padding:0.75rem 1.1rem; text-align:center; font-size:0.85rem; font-weight:600; color:var(--slate-700); min-width:110px; }
+.flow-step.primary { background:var(--blue-600); color:white; border-color:var(--blue-700); }
+.flow-step.success { background:var(--green-600); color:white; border-color:var(--green-700); }
+.flow-step.warning { background:var(--amber-500); color:white; border-color:var(--amber-600); }
+.flow-step.purple { background:var(--purple-600); color:white; border-color:var(--purple-600); }
+.flow-step .flow-icon { font-size:1.3rem; display:block; margin-bottom:0.25rem; }
+.flow-step .flow-sub { font-weight:400; font-size:0.75rem; opacity:0.85; margin-top:0.15rem; }
+.flow-arrow { font-size:1.4rem; color:var(--slate-400); padding:0 0.3rem; flex-shrink:0; }
+.label-table { width:100%; border-collapse:separate; border-spacing:0; font-size:0.88rem; }
+.label-table th { background:var(--blue-700); color:white; padding:0.75rem 1rem; text-align:left; font-weight:600; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.5px; }
+.label-table th:first-child { border-radius:var(--radius-sm) 0 0 0; }
+.label-table th:last-child { border-radius:0 var(--radius-sm) 0 0; }
+.label-table td { padding:0.65rem 1rem; border-bottom:1px solid var(--slate-200); vertical-align:top; }
+.label-table tr:last-child td { border-bottom:none; }
+.label-table tr:nth-child(even) td { background:var(--slate-50); }
+.label-table tr:hover td { background:var(--blue-50); }
+.label-badge { display:inline-block; padding:0.2rem 0.6rem; border-radius:999px; font-weight:600; font-size:0.78rem; white-space:nowrap; }
+.lb-blue { background:#dbeafe; color:#1d4ed8; } .lb-amber { background:#fef3c7; color:#92400e; }
+.lb-red { background:#fee2e2; color:#991b1b; } .lb-green { background:#dcfce7; color:#166534; }
+.lb-purple { background:#e0e7ff; color:#3730a3; }
+.wf-card { background:white; border-radius:var(--radius); box-shadow:var(--shadow); border:1px solid var(--slate-200); overflow:hidden; margin-bottom:1.5rem; }
+.wf-header { padding:1rem 1.5rem; display:flex; align-items:center; gap:0.75rem; border-bottom:1px solid var(--slate-200); }
+.wf-num { display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:50%; font-weight:700; font-size:1rem; flex-shrink:0; color:white; background:var(--blue-600); }
+.wf-header h3 { font-size:1.1rem; font-weight:700; color:var(--slate-800); }
+.wf-header .wf-tag { font-size:0.75rem; padding:0.15rem 0.5rem; border-radius:999px; background:var(--slate-100); color:var(--slate-600); font-weight:500; }
+.wf-body { padding:1.25rem 1.5rem; }
+.wf-body h4 { font-size:0.9rem; font-weight:600; color:var(--slate-700); margin-bottom:0.5rem; margin-top:1rem; }
+.wf-body h4:first-child { margin-top:0; }
+.steps { counter-reset:step; list-style:none; padding:0; }
+.steps li { position:relative; padding:0.5rem 0 0.5rem 2.5rem; font-size:0.9rem; line-height:1.5; }
+.steps li::before { counter-increment:step; content:counter(step); position:absolute; left:0; top:0.45rem; width:24px; height:24px; border-radius:50%; background:var(--blue-100); color:var(--blue-700); font-size:0.75rem; font-weight:700; display:flex; align-items:center; justify-content:center; }
+.steps li + li { border-top:1px solid var(--slate-100); }
+.info-box { padding:0.85rem 1rem; border-radius:var(--radius-sm); font-size:0.88rem; margin:0.75rem 0; display:flex; align-items:flex-start; gap:0.6rem; }
+.info-box.info { background:var(--blue-50); border-left:4px solid var(--blue-500); color:var(--blue-800); }
+.info-box.warn { background:var(--amber-50); border-left:4px solid var(--amber-500); color:#92400e; }
+.info-box.danger { background:var(--red-50); border-left:4px solid var(--red-500); color:#991b1b; }
+.info-box.tip { background:var(--green-50); border-left:4px solid var(--green-500); color:var(--green-700); }
+.info-box .ib-icon { font-size:1.1rem; flex-shrink:0; margin-top:0.05rem; }
+code { background:var(--slate-100); padding:0.15rem 0.4rem; border-radius:4px; font-size:0.82rem; font-family:'SF Mono',Monaco,Consolas,monospace; color:var(--indigo-600); }
+.ts-item { margin-bottom:0.75rem; }
+.ts-problem { font-weight:600; color:var(--red-600); font-size:0.9rem; }
+.ts-solution { font-size:0.88rem; color:var(--slate-700); margin-top:0.2rem; padding-left:1rem; }
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+strong { color:var(--slate-800); } a { color:var(--blue-600); }
+p { margin-bottom:0.5rem; } ul,ol { margin-left:1.25rem; margin-bottom:0.5rem; }
+li { margin-bottom:0.2rem; font-size:0.9rem; } hr { border:none; border-top:1px solid var(--slate-200); margin:1.5rem 0; }
+@media (max-width:768px) {
+  .header h1 { font-size:1.6rem; } .qr-grid { grid-template-columns:1fr; }
+  .toc-grid { grid-template-columns:1fr; } .grid-2 { grid-template-columns:1fr; }
+  .flow { flex-direction:column; } .flow-arrow { transform:rotate(90deg); }
+  .container { padding:0 1rem 3rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="header-back">&#x2190; Back to SOP Index</a>
+    <h1>🏦 Transaction Reconciler</h1>
+    <div class="subtitle">Standard Operating Procedure &mdash; Daily reconciliation of financial transactions in the Operations Director Airtable base</div>
+    <div class="version">Version 1.0 &bull; 09 Apr 2025 &bull; Owner: Kevin Brittain</div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- QUICK REFERENCE -->
+<div class="quick-ref">
+  <h2>&#x26A1; Quick Reference</h2>
+  <div class="qr-grid">
+
+    <div class="qr-item">
+      <div class="qr-label">Trigger Phrase</div>
+      <div class="qr-value">reconcile transactions</div>
+    </div>
+
+    <div class="qr-item">
+      <div class="qr-label">Skill File</div>
+      <div class="qr-value"><code>/mnt/skills/user/transaction-reconciler/SKILL.md</code></div>
+    </div>
+
+    <div class="qr-item">
+      <div class="qr-label">Primary Tool(s)</div>
+      <div class="qr-value">Airtable, Slack</div>
+    </div>
+
+    <div class="qr-item">
+      <div class="qr-label">Airtable Base</div>
+      <div class="qr-value">Operations Director (<code>appnqjDpqDniH3IRl</code>)</div>
+    </div>
+
+    <div class="qr-item">
+      <div class="qr-label">Approval Required</div>
+      <div class="qr-value">Yes</div>
+    </div>
+
+    <div class="qr-item">
+      <div class="qr-label">Slack Channel</div>
+      <div class="qr-value">#reconciliation (<code>C0AMNU29V7Z</code>)</div>
+    </div>
+
+    <div class="qr-item">
+      <div class="qr-label">Category</div>
+      <div class="qr-value">Finance</div>
+    </div>
+
+    <div class="qr-item">
+      <div class="qr-label">Estimated Duration</div>
+      <div class="qr-value">5–15 minutes (depending on volume &amp; amendments)</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="section">
+  <div class="toc">
+    <h2>&#x1F4D1; Contents</h2>
+    <div class="toc-grid">
+      <a href="#purpose"><span class="toc-num">1</span> Purpose &amp; Scope</a>
+      <a href="#trigger"><span class="toc-num">2</span> When to Use This Skill</a>
+      <a href="#inputs"><span class="toc-num">3</span> Required Inputs</a>
+      <a href="#workflow"><span class="toc-num">4</span> Step-by-Step Workflow</a>
+      <a href="#tools"><span class="toc-num">5</span> Tools &amp; Integrations</a>
+      <a href="#approval"><span class="toc-num">6</span> Approval Gates</a>
+      <a href="#outputs"><span class="toc-num">7</span> Outputs &amp; Confirmations</a>
+      <a href="#errors"><span class="toc-num">8</span> Error Handling</a>
+      <a href="#troubleshooting"><span class="toc-num">9</span> Troubleshooting</a>
+      <a href="#changelog"><span class="toc-num">10</span> Changelog</a>
+    </div>
+  </div>
+</div>
+
+<!-- 1. PURPOSE -->
+<div class="section" id="purpose">
+  <h2 class="section-title"><span class="icon">&#x1F3AF;</span> 1. Purpose &amp; Scope</h2>
+  <div class="card">
+    <p>This skill reconciles unreconciled bank transactions in the Operations Director Airtable base by matching them against a history of 7,400+ previously reconciled transactions. It uses Account Alias + Vendor matching with confidence tiers, infers linked records (Business, Cost, Property, Unit, Tenancy, Team Member) where historical precedent or a Learned Rule applies, and presents a structured approval dashboard before writing anything to Airtable.</p>
+    <p>The skill is self-improving: every run that results in Kevin's amendments must update the Learned Rules section of the SKILL.md, so the same mistake never happens twice. The objective is zero amendments per run.</p>
+    <div class="info-box info">
+      <span class="ib-icon">&#x2139;&#xFE0F;</span>
+      <div><strong>Scope:</strong> In scope — matching, categorising, and linking unreconciled transactions; generating an HTML approval dashboard; writing approved records to Airtable; posting a Slack summary; updating the SKILL.md with learned rules. Out of scope — creating new bank transactions, modifying reconciled records, or reconciling transactions from outside the Operations Director base.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 2. TRIGGER -->
+<div class="section" id="trigger">
+  <h2 class="section-title"><span class="icon">&#x1F4A1;</span> 2. When to Use This Skill</h2>
+  <div class="card">
+    <div class="card-header">&#x1F4AC; Trigger Phrases</div>
+    <p>Use this skill when Kevin or the team says any of the following:</p>
+    <ul>
+      <li>"Reconcile transactions"</li>
+      <li>"Run reconciliation"</li>
+      <li>"Categorise bank transactions"</li>
+      <li>"Process unreconciled items"</li>
+      <li>"Run the reconciler"</li>
+      <li>"What's unreconciled?"</li>
+      <li>Triggered on daily schedule</li>
+    </ul>
+    <div class="info-box warn">
+      <span class="ib-icon">&#x26A0;&#xFE0F;</span>
+      <div><strong>Do not use this skill when:</strong> Kevin is asking about a single specific transaction in isolation without requesting a full reconciliation run, or when asking about cash flow forecasting (use the cash-flow-forecast skill instead).</div>
+    </div>
+  </div>
+</div>
+
+<!-- 3. INPUTS -->
+<div class="section" id="inputs">
+  <h2 class="section-title"><span class="icon">&#x1F4E5;</span> 3. Required Inputs</h2>
+  <div class="card">
+    <table class="label-table">
+      <thead>
+        <tr>
+          <th>Input</th>
+          <th>Required</th>
+          <th>Description</th>
+          <th>Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Trigger command</strong></td>
+          <td><span class="label-badge lb-red">Required</span></td>
+          <td>Kevin's instruction to run reconciliation</td>
+          <td><em>"Reconcile transactions"</em></td>
+        </tr>
+        <tr>
+          <td><strong>Airtable MCP connection</strong></td>
+          <td><span class="label-badge lb-red">Required</span></td>
+          <td>Must be connected to Operations Director base</td>
+          <td><em>appnqjDpqDniH3IRl</em></td>
+        </tr>
+        <tr>
+          <td><strong>Slack MCP connection</strong></td>
+          <td><span class="label-badge lb-red">Required</span></td>
+          <td>Must be connected to post to #reconciliation</td>
+          <td><em>C0AMNU29V7Z</em></td>
+        </tr>
+        <tr>
+          <td><strong>Kevin's approval / amendments</strong></td>
+          <td><span class="label-badge lb-red">Required</span></td>
+          <td>Dashboard review before writes are applied</td>
+          <td><em>"Approve all" or specific row corrections</em></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 4. WORKFLOW -->
+<div class="section" id="workflow">
+  <h2 class="section-title"><span class="icon">&#x1F504;</span> 4. Step-by-Step Workflow</h2>
+
+  <div class="card">
+    <div class="card-header">&#x1F5FA; Process Flow</div>
+    <div class="flow">
+      <div class="flow-step primary">
+        <span class="flow-icon">📥</span>
+        Load Context
+        <div class="flow-sub">Fetch unreconciled</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step primary">
+        <span class="flow-icon">🔍</span>
+        Vendor Match
+        <div class="flow-sub">History + Rules</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step primary">
+        <span class="flow-icon">🏷️</span>
+        Categorise
+        <div class="flow-sub">Cat / Sub Cat / Links</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step warning">
+        <span class="flow-icon">📊</span>
+        Dashboard
+        <div class="flow-sub">HTML approval view</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step warning">
+        <span class="flow-icon">✅</span>
+        Approval Gate
+        <div class="flow-sub">Kevin reviews</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step primary">
+        <span class="flow-icon">✍️</span>
+        Apply Writes
+        <div class="flow-sub">Airtable updates</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step purple">
+        <span class="flow-icon">🔄</span>
+        Self-Improve
+        <div class="flow-sub">Update SKILL.md</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step success">
+        <span class="flow-icon">📣</span>
+        Slack Summary
+        <div class="flow-sub">#reconciliation</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wf-card">
+    <div class="wf-header">
+      <div class="wf-num">1</div>
+      <h3>Load Context (Phase 1)</h3>
+      <span class="wf-tag">automated</span>
+    </div>
+    <div class="wf-body">
+      <ol class="steps">
+        <li>Use <code>list_records_for_table</code> with structured <code>filters</code> parameter — NOT <code>filterByFormula</code> (silently ignored).</li>
+        <li>Filter on <code>fldxKX1IbIFcAOnn5 = false</code> (Reconciled = false) to pull only unreconciled transactions.</li>
+        <li>Always pass <code>fieldIds</code> and <code>pageSize</code> (e.g. 200) in every request.</li>
+        <li>Do NOT pull all 7,400+ reconciled records at once — query by exact vendor + account alias for historical matching.</li>
+      </ol>
+      <div class="info-box warn">
+        <span class="ib-icon">⚠️</span>
+        <div><strong>Critical:</strong> <code>filterByFormula</code> is silently ignored by the Airtable MCP. Always use structured <code>filters</code>.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wf-card">
+    <div class="wf-header">
+      <div class="wf-num">2</div>
+      <h3>Vendor Matching (Phase 2)</h3>
+      <span class="wf-tag">automated</span>
+    </div>
+    <div class="wf-body">
+      <p>Match each unreconciled transaction against historical reconciled records using Account Alias + Vendor. Apply confidence tiers:</p>
+      <ol class="steps">
+        <li><strong>High confidence</strong> — 3+ consistent matches: suggest Category, Sub Category, AND every linked field that ALL matches agree on (assessed independently per field).</li>
+        <li><strong>Medium confidence</strong> — mixed results: use mode value with <code>[Mixed History]</code> prefix.</li>
+        <li><strong>Low confidence</strong> — 1–2 matches: use available data with <code>[Low Volume]</code> prefix.</li>
+        <li><strong>AI Inferred</strong> — no vendor match but inference is sensible: use <code>[AI Inferred]</code> prefix.</li>
+        <li><strong>No Match</strong> — flag as <code>[No Match]</code> for Kevin to handle manually.</li>
+      </ol>
+      <div class="info-box info">
+        <span class="ib-icon">ℹ️</span>
+        <div>Business is always inferred from Category — never inherited from the bank account. Learned Rules (Phase 2b) always override generic AI inference.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wf-card">
+    <div class="wf-header">
+      <div class="wf-num">3</div>
+      <h3>Apply Learned Rules (Phase 2b)</h3>
+      <span class="wf-tag">automated</span>
+    </div>
+    <div class="wf-body">
+      <p>Before generating the dashboard, check every transaction against the Learned Rules. These override generic matching:</p>
+      <ol class="steps">
+        <li>Mortgage payments — cross-reference loan reference number to Cost record, always populate Property.</li>
+        <li>TOGETHER COMMERCIAL FINANCE, BHAM MIDSHIRES, TMW DDR, Secure Trust Bank — link specific Cost records by reference.</li>
+        <li>COLLINS S + "AIGBURTH" reference — Rental Income, link Aigburth property and active Tenancy/Unit.</li>
+        <li>Transfer transactions (AmEx, TNT MANAGEMENT, KEVIN BRITTAIN) — Category AND Sub Category both "Transfers".</li>
+        <li>NOTEMACHINE / ATM withdrawals on Santander — COGS Reactive Maintenance, 22 Newton Street.</li>
+        <li>Gary Marsh payments — Capital Expenditure; parse property from name; link Property only, no Team Member, no Unit.</li>
+        <li>Paul Brittain inflows — Loan Receipt / Loan Receipt.</li>
+        <li>JOO EE BRITTAIN LOAN references — look up matching Loan Repayment cost by date reference.</li>
+        <li>SHELLEY CO — Operating Expenses / Professional Fees / Real Estate.</li>
+        <li>Monese CB account — ALL transactions are Personal / Personal Expense Not Tax Deductible. Sub Category by vendor type.</li>
+        <li>AmEx interest, credit for interest, and payment received — no linked Cost record.</li>
+        <li>WILLINGHAM WOLVES — Personal / Personal Expense Not Tax Deductible / Discretionary Lifestyle.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="wf-card">
+    <div class="wf-header">
+      <div class="wf-num">4</div>
+      <h3>Generate Approval Dashboard (Phase 5)</h3>
+      <span class="wf-tag">automated</span>
+    </div>
+    <div class="wf-body">
+      <ol class="steps">
+        <li>Render <code>reconciliation-YYYY-MM-DD.html</code> to outputs folder. Dark theme. Max width 1500px.</li>
+        <li>Every linked-record field MUST be a dedicated, always-visible column — never hidden in Notes, tooltips, or a combined "Links" column.</li>
+        <li>Column order (non-negotiable): <code>Date | Account | Amount | Vendor/Name | Category | Sub Category | Business | Cost | Property | Rental Unit | Tenancy | Tenant | Team Member | Confidence | Notes</code></li>
+        <li>Empty linked cells render <code>—</code> in muted colour. Notes column contains rationale only.</li>
+        <li>Include a <strong>Save SKILL.md to clipboard</strong> button (top right) on every dashboard — copies the latest skill source for Kevin to paste back to file.</li>
+      </ol>
+      <div class="info-box danger">
+        <span class="ib-icon">🚫</span>
+        <div><strong>Non-negotiable:</strong> Linked records must NEVER be hidden, collapsed, merged into a single column, or placed in Notes. Any deviation from the mandatory column layout is a defect.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wf-card">
+    <div class="wf-header">
+      <div class="wf-num">5</div>
+      <h3>Kevin Reviews &amp; Approves (Approval Gate)</h3>
+      <span class="wf-tag">approval gate</span>
+    </div>
+    <div class="wf-body">
+      <ol class="steps">
+        <li>Present the dashboard HTML file to Kevin.</li>
+        <li>Kevin reviews each row, amending Category, Sub Category, linked records, or confidence as needed.</li>
+        <li>Kevin confirms approval — either "Approve all" or item-by-item corrections.</li>
+        <li>If amendments are made, proceed to Phase 8 (Self-Improvement) before Phase 6 writes.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="wf-card">
+    <div class="wf-header">
+      <div class="wf-num">6</div>
+      <h3>Apply Writes to Airtable (Phase 6)</h3>
+      <span class="wf-tag">automated</span>
+    </div>
+    <div class="wf-body">
+      <ol class="steps">
+        <li>Resolve Category and Sub Category record IDs by querying the Chart of Accounts - Categories table (<code>tbleWb8ioptnEwPR8</code>) and Sub Categories table (<code>tblOTdRcPf8AgRz25</code>).</li>
+        <li>Write Category, Sub Category and every approved linked record via <code>update_records_for_table</code> in batches of 10.</li>
+        <li>Linked records must be written as plain string arrays, e.g. <code>["recXXX"]</code>.</li>
+        <li>Tick Reconciled field; clear Reconcile Requested field.</li>
+        <li>Confirm all writes completed successfully before proceeding to Slack.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="wf-card">
+    <div class="wf-header">
+      <div class="wf-num">7</div>
+      <h3>Self-Improvement (Phase 8)</h3>
+      <span class="wf-tag">conditional</span>
+    </div>
+    <div class="wf-body">
+      <p>This phase is MANDATORY after every run where Kevin made amendments. It runs before Phase 6 writes.</p>
+      <ol class="steps">
+        <li>Capture every amendment as a permanent Learned Rule in the SKILL.md.</li>
+        <li>Rebuild the dashboard with all corrections applied.</li>
+        <li>Re-render the dashboard with the updated SKILL.md loaded into the Save SKILL.md button.</li>
+        <li>Tell Kevin to click Save SKILL.md and paste the content into the skill file.</li>
+        <li>Only then proceed with Phase 6 Airtable writes.</li>
+      </ol>
+      <div class="info-box tip">
+        <span class="ib-icon">✅</span>
+        <div>Every amendment is a skill defect. The objective is zero amendments. Each Learned Rule prevents the same mistake from recurring.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wf-card">
+    <div class="wf-header">
+      <div class="wf-num">8</div>
+      <h3>Post Slack Summary (Phase 7)</h3>
+      <span class="wf-tag">automated</span>
+    </div>
+    <div class="wf-body">
+      <ol class="steps">
+        <li>Post summary to #reconciliation ONLY after Phase 6 writes complete successfully.</li>
+        <li>Include: total transactions reconciled, breakdown by category/business, any [No Match] items needing manual review, and count of amendments made.</li>
+      </ol>
+    </div>
+  </div>
+
+</div>
+
+<!-- 5. TOOLS & INTEGRATIONS -->
+<div class="section" id="tools">
+  <h2 class="section-title"><span class="icon">&#x1F527;</span> 5. Tools &amp; Integrations</h2>
+  <div class="card">
+    <table class="label-table">
+      <thead>
+        <tr>
+          <th>Tool</th>
+          <th>Purpose</th>
+          <th>Access</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Airtable MCP</strong></td>
+          <td>Read unreconciled transactions; query historical matches; write reconciled records; resolve Chart of Accounts IDs</td>
+          <td><span class="label-badge lb-blue">Connected</span></td>
+        </tr>
+        <tr>
+          <td><strong>Slack MCP</strong></td>
+          <td>Post reconciliation summary to #reconciliation after approval and writes</td>
+          <td><span class="label-badge lb-blue">Connected</span></td>
+        </tr>
+        <tr>
+          <td><strong>HTML Dashboard (outputs)</strong></td>
+          <td>Approval interface rendered as <code>reconciliation-YYYY-MM-DD.html</code> for Kevin's review</td>
+          <td><span class="label-badge lb-green">Generated</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="info-box info" style="margin-top:1rem;">
+      <span class="ib-icon">ℹ️</span>
+      <div>
+        <strong>Key Airtable tables:</strong><br>
+        Transactions table (unreconciled filter: <code>fldxKX1IbIFcAOnn5 = false</code>)<br>
+        Chart of Accounts - Categories: <code>tbleWb8ioptnEwPR8</code><br>
+        Sub Categories: <code>tblOTdRcPf8AgRz25</code>
+      </div>
+    </div>
+
+    <div class="info-box info">
+      <span class="ib-icon">ℹ️</span>
+      <div>
+        <strong>Linked field IDs:</strong><br>
+        Business: <code>fldX1aFlJyzpXGhbF</code> &bull; Costs: <code>fldGkpkVqSeiGvUGL</code> &bull; Property: <code>fldvp44VfF8uTTthp</code><br>
+        Unit: <code>fldJGIhSbgXNIEW4a</code> &bull; Tenancy: <code>fldPmAMmxwqs4SdPa</code> &bull; Team Member: <code>fldMwliSwEhLuumvd</code><br>
+        Tenants: <code>fldTVrkgXICUCvxaI</code> (READ-ONLY — never write)
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 6. APPROVAL GATES -->
+<div class="section" id="approval">
+  <h2 class="section-title"><span class="icon">&#x2705;</span> 6. Approval Gates</h2>
+  <div class="card">
+    <div class="info-box warn">
+      <span class="ib-icon">⚠️</span>
+      <div><strong>Approval Gate 1 — Dashboard Review:</strong> No Airtable writes happen until Kevin has reviewed and approved the reconciliation dashboard. Kevin must confirm "Approve all" or provide row-level corrections before Phase 6 runs.</div>
+    </div>
+    <div class="info-box warn">
+      <span class="ib-icon">⚠️</span>
+      <div><strong>Approval Gate 2 — Amendment Capture:</strong> If Kevin makes any corrections, Phase 8 (Self-Improvement) must run first and Kevin must click Save SKILL.md before writes are applied. The skill must never apply Phase 6 writes while amendments remain uncaptured.</div>
+    </div>
+    <div class="info-box tip">
+      <span class="ib-icon">✅</span>
+      <div>Slack notification is gated on Phase 6 completion — it never posts if writes have not been applied.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 7. OUTPUTS -->
+<div class="section" id="outputs">
+  <h2 class="section-title"><span class="icon">&#x1F4E4;</span> 7. Outputs &amp; Confirmations</h2>
+  <div class="card">
+    <table class="label-table">
+      <thead>
+        <tr>
+          <th>Output</th>
+          <th>Where</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Reconciliation Dashboard</strong></td>
+          <td><code>/mnt/user-data/outputs/reconciliation-YYYY-MM-DD.html</code></td>
+          <td>Dark theme, max 1500px, mandatory column layout, Save SKILL.md button</td>
+        </tr>
+        <tr>
+          <td><strong>Updated Airtable records</strong></td>
+          <td>Operations Director Airtable base</td>
+          <td>Category, Sub Cat, linked records written; Reconciled ticked; Reconcile Requested cleared</td>
+        </tr>
+        <tr>
+          <td><strong>Slack summary</strong></td>
+          <td>#reconciliation (<code>C0AMNU29V7Z</code>)</td>
+          <td>Posted after Phase 6 completes. Includes totals, breakdown, and any [No Match] items</td>
+        </tr>
+        <tr>
+          <td><strong>Updated SKILL.md (clipboard)</strong></td>
+          <td>Save SKILL.md button on dashboard</td>
+          <td>Only present after amendments — Kevin pastes back to skill file</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 8. ERROR HANDLING -->
+<div class="section" id="errors">
+  <h2 class="section-title"><span class="icon">&#x1F6A8;</span> 8. Error Handling</h2>
+  <div class="card">
+    <ul>
+      <li><strong>Airtable filter returns no results</strong> — confirm the filter uses structured <code>filters</code> not <code>filterByFormula</code>. If correct and no unreconciled records exist, report "Nothing to reconcile today" to Kevin.</li>
+      <li><strong>Chart of Accounts ID not found</strong> — do not guess. Flag the specific Category or Sub Category that failed to resolve and ask Kevin to confirm the correct value before writing.</li>
+      <li><strong>Linked record write fails</strong> — confirm the record ID format is a plain string array <code>["recXXX"]</code>. Retry in a smaller batch if a batch-level error occurs.</li>
+      <li><strong>Slack post fails</strong> — report the failure to Kevin in chat. Do not retry silently. Reconciliation writes are already complete; only the notification failed.</li>
+      <li><strong>[No Match] transactions</strong> — surface on the dashboard and flag in the Slack summary. Kevin must handle these manually; do not invent a category.</li>
+      <li><strong>Phase 8 skipped</strong> — if amendments were made and Phase 8 was not run, do not apply Phase 6 writes. Stop and complete the self-improvement cycle first.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 9. TROUBLESHOOTING -->
+<div class="section" id="troubleshooting">
+  <h2 class="section-title"><span class="icon">&#x1F6E0;&#xFE0F;</span> 9. Troubleshooting</h2>
+  <div class="card">
+    <div class="ts-item">
+      <div class="ts-problem">❌ Filter returns all records or unexpected results</div>
+      <div class="ts-solution">✅ Confirm you are using the structured <code>filters</code> parameter, not <code>filterByFormula</code>. The MCP silently ignores <code>filterByFormula</code>.</div>
+    </div>
+    <div class="ts-item">
+      <div class="ts-problem">❌ Linked records are showing in Notes column or hidden in expandable panels</div>
+      <div class="ts-solution">✅ This is a dashboard defect. Rebuild the dashboard with each linked-record field as its own dedicated column. The mandatory column layout is non-negotiable.</div>
+    </div>
+    <div class="ts-item">
+      <div class="ts-problem">❌ Mortgage payment not linked to Property</div>
+      <div class="ts-solution">✅ Check the Learned Rule for mortgage interest payments. Cross-reference the loan reference number in the Costs table to find the linked Property record. Apply it.</div>
+    </div>
+    <div class="ts-item">
+      <div class="ts-problem">❌ Monese transaction categorised as "Personal Expense Tax Deductible"</div>
+      <div class="ts-solution">✅ All Monese CB account transactions are "Personal Expense Not Tax Deductible". Update and add the specific vendor as a Learned Rule if it recurs.</div>
+    </div>
+    <div class="ts-item">
+      <div class="ts-problem">❌ Transfer transactions categorised as "Credit Card Payment" or "Intercompany Transfer"</div>
+      <div class="ts-solution">✅ Transfers must use "Transfers" for both Category AND Sub Category. Apply the Learned Rule and capture as a defect in Phase 8.</div>
+    </div>
+    <div class="ts-item">
+      <div class="ts-problem">❌ Gary Marsh payment linked to Team Member or Rental Unit</div>
+      <div class="ts-solution">✅ Gary Marsh is a contractor, not a team member. Only link Property (parsed from the *Name field). Remove Team Member and Unit links.</div>
+    </div>
+    <div class="ts-item">
+      <div class="ts-problem">❌ AmEx interest charge linked to a Cost record</div>
+      <div class="ts-solution">✅ AmEx interest charges, credits, and payment received entries must never have a linked Cost. Leave Costs empty per the Learned Rule.</div>
+    </div>
+    <div class="ts-item">
+      <div class="ts-problem">❌ Phase 8 not triggered after Kevin made amendments</div>
+      <div class="ts-solution">✅ Stop Phase 6 writes immediately. Run Phase 8, capture all amendments as Learned Rules, re-render the dashboard with the Save SKILL.md button, and wait for Kevin to save before proceeding.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 10. CHANGELOG -->
+<div class="section" id="changelog">
+  <h2 class="section-title"><span class="icon">&#x1F4DD;</span> 10. Changelog</h2>
+  <div class="card">
+    <table class="label-table">
+      <thead>
+        <tr>
+          <th>Version</th>
+          <th>Date</th>
+          <th>Changes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="label-badge lb-blue">1.0</span></td>
+          <td>09 Apr 2025</td>
+          <td>Initial release — full 8-phase workflow including Learned Rules, mandatory dashboard layout, self-improvement cycle, and Slack summary</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</div>
+</body>
+</html>
