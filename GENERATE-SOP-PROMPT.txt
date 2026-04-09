@@ -1,0 +1,22 @@
+Generate a complete SOP HTML file for the skill described below.
+
+Use the SOP template file at /mnt/skills/user/sop-template.html as your base structure.
+Replace every {{PLACEHOLDER}} with the correct content for this skill.
+
+Rules:
+- Match the exact HTML structure and CSS classes from the template. Do not change the styling.
+- Read the skill's SKILL.md file first to understand what it does before writing anything.
+- Fill in all sections. Do not leave any placeholder text in the final output.
+- The workflow cards section (section 4) should reflect the actual steps the skill takes,
+  including any approval gates, tool calls, and Slack notifications.
+- For the inputs table, list every piece of information the skill needs from Kevin to run.
+- For the tools table, list every tool the skill uses (Airtable, Slack, Gmail, etc.).
+- Troubleshooting should cover the 3-5 most common failure points for this skill.
+- Keep language direct and factual. No fluff.
+- Output the full HTML file only. No preamble, no explanation, no code fences.
+
+When done, save the file as:
+  /mnt/user-data/outputs/sops/{{skill-name}}.html
+
+Skill to document: [PASTE SKILL NAME HERE]
+Skill file location: /mnt/skills/user/[skill-folder]/SKILL.md
