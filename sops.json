@@ -1,5 +1,15 @@
 [
   {
+    "id": "transaction-reconciler",
+    "title": "Transaction Reconciler",
+    "desc": "Daily reconciliation of financial transactions in the Operations Director Airtable base, matching unreconciled transactions against history and posting a summary to Slack after approval.",
+    "category": "finance",
+    "icon": "&#x1F4B3;",
+    "version": "1.0",
+    "updated": "2025-04-09",
+    "file": "sops/transaction-reconciler.html"
+  },
+  {
     "id": "sop-generator",
     "title": "SOP Generator",
     "desc": "Generates a complete SOP HTML file for any of Kevin's skills by reading its SKILL.md and filling every placeholder in the standard SOP template.",
