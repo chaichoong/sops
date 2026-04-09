@@ -1,0 +1,12 @@
+[
+  {
+    "id": "transaction-reconciler",
+    "title": "Transaction Reconciler",
+    "desc": "Daily reconciliation of financial transactions across Santander and Zempler accounts.",
+    "category": "finance",
+    "icon": "&#x1F4B3;",
+    "version": "1.0",
+    "updated": "2026-04-09",
+    "file": "sops/transaction-reconciler.html"
+  }
+]
