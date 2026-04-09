@@ -248,5 +248,15 @@
     "version": "1.0",
     "updated": "2025-04-09",
     "file": "sops/skill-creator-from-manus.html"
+  },
+  {
+    "id": "sop-generator",
+    "title": "SOP Generator",
+    "desc": "Generates a complete SOP HTML file and JSON metadata record for any skill by reading its SKILL.md and filling every placeholder in the standard template.",
+    "category": "system",
+    "icon": "&#x1F4C4;",
+    "version": "1.0",
+    "updated": "2025-04-09",
+    "file": "sops/sop-generator.html"
   }
 ]
