@@ -1,0 +1,64 @@
+name: Update SOPs Index
+
+on:
+  push:
+    paths:
+      - 'sops/**.json'
+
+jobs:
+  update-sops-json:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Merge sidecar JSON files into sops.json
+        run: |
+          node -e "
+            const fs = require('fs');
+            const path = require('path');
+
+            const sopsDir = './sops';
+            const outputFile = './sops.json';
+
+            // Read all .json files from sops/ folder
+            const files = fs.readdirSync(sopsDir)
+              .filter(f => f.endsWith('.json'))
+              .sort();
+
+            const entries = [];
+
+            files.forEach(file => {
+              try {
+                const content = fs.readFileSync(path.join(sopsDir, file), 'utf8');
+                const entry = JSON.parse(content);
+                entries.push(entry);
+                console.log('Added: ' + file);
+              } catch (e) {
+                console.error('Skipped (invalid JSON): ' + file);
+              }
+            });
+
+            // Sort by category then title
+            const catOrder = ['finance','property','tenant','comms','ops','content','system'];
+            entries.sort((a, b) => {
+              const catA = catOrder.indexOf(a.category);
+              const catB = catOrder.indexOf(b.category);
+              if (catA !== catB) return catA - catB;
+              return a.title.localeCompare(b.title);
+            });
+
+            fs.writeFileSync(outputFile, JSON.stringify(entries, null, 2));
+            console.log('sops.json updated with ' + entries.length + ' entries.');
+          "
+
+      - name: Commit updated sops.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add sops.json
+          git diff --staged --quiet || git commit -m "Auto-update sops.json from sidecar files"
+          git push
